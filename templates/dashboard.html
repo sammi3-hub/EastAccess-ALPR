@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EastAccess: Smart Vehicle Access Control</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='eastaccess_logo.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <button class="global-sidebar-toggle" onclick="toggleSidebar()" title="Toggle sidebar">☰</button>
+    <div class="aurora aurora-one"></div>
+    <div class="aurora aurora-two"></div>
+    <div class="grid-bg"></div>
+
+    <aside class="sidebar">
+        <div class="brand">
+            <div class="brand-logo-wrap">
+                <img src="{{ url_for('static', filename='eastaccess_logo.png') }}" alt="EastAccess logo" class="brand-logo">
+            </div>
+            <div>
+                <h1>EastAccess</h1>
+                <p>Gate Command Center</p>
+            </div>
+        </div>
+
+        <nav>
+            <a href="#overview">Overview</a>
+            <a href="#cameras">Live Cameras</a>
+            <a href="#manual">Manual Control</a>
+            <a href="#temporary">Temporary Access</a>
+            <a href="#vehicles">Registered Vehicles</a>
+            <a href="#logs">Gate Logs</a>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <section class="hero" id="overview">
+            <div class="hero-copy">
+                <div class="hero-kicker">
+                    <span class="pulse"></span>
+                    Subdivision Security Dashboard
+                </div>
+
+                <h2>EastAccess:<br><span class="hero-title-second">Smart Vehicle Access Control</span></h2>
+
+                <p class="hero-text">
+                    Manage ALPR-based entry and exit, control the boom barrier, register temporary visitors,
+                    and monitor real-time gate activity from one futuristic command dashboard.
+                </p>
+
+                <div class="hero-actions">
+                    <a href="#cameras">View Live Cameras</a>
+                    <a href="#manual">Control Barrier</a>
+                </div>
+            </div>
+
+            <div class="hero-orb">
+                <div class="orb-ring ring-one"></div>
+                <div class="orb-ring ring-two"></div>
+                <div class="core-orb">
+                    <img src="{{ url_for('static', filename='eastaccess_icon_only.png') }}" alt="EastAccess icon" class="orb-logo-icon">
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-grid">
+            <div class="stat-card">
+                <p>Entries Today</p>
+                <h3 id="entriesToday">{{ stats.entries_today }}</h3>
+                <span>Inbound vehicles</span>
+            </div>
+            <div class="stat-card">
+                <p>Exits Today</p>
+                <h3 id="exitsToday">{{ stats.exits_today }}</h3>
+                <span>Outbound vehicles</span>
+            </div>
+            <div class="stat-card">
+                <p>Currently Inside</p>
+                <h3 id="currentlyInside">{{ stats.currently_inside }}</h3>
+                <span>Active presence</span>
+            </div>
+            <div class="stat-card danger">
+                <p>Denied Today</p>
+                <h3 id="deniedToday">{{ stats.denied_today }}</h3>
+                <span>Blocked attempts</span>
+            </div>
+            <div class="stat-card">
+                <p>Active Temp Access</p>
+                <h3 id="activeTemp">{{ stats.active_temp }}</h3>
+                <span>Visitor passes</span>
+            </div>
+        </section>
+
+        <section class="camera-grid" id="cameras">
+            <div class="panel camera-card">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Entry Lane</p>
+                        <h3>ENTRY Camera</h3>
+                    </div>
+                    <span class="badge green">Live</span>
+                </div>
+
+                <div class="camera-frame">
+                    <img class="camera-feed" src="{{ url_for('video', gate_name='ENTRY') }}" alt="Entry camera">
+                </div>
+
+                <div class="vehicle-detail">
+                    <h4>Latest Entry Detection</h4>
+                    <div class="detail-grid">
+                        <span>Plate</span><strong id="entryPlate">{{ state.ENTRY.plate }}</strong>
+                        <span>Status</span><strong id="entryStatus">{{ state.ENTRY.status }}</strong>
+                        <span>Owner/Driver</span><strong id="entryOwner">{{ state.ENTRY.owner }}</strong>
+                        <span>Vehicle</span><strong id="entryVehicle">{{ state.ENTRY.vehicle_type }}</strong>
+                        <span>Color</span><strong id="entryColor">{{ state.ENTRY.color }}</strong>
+                        <span>Access Type</span><strong id="entryAccess">{{ state.ENTRY.access_type }}</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel camera-card">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Exit Lane</p>
+                        <h3>EXIT Camera</h3>
+                    </div>
+                    <span class="badge green">Live</span>
+                </div>
+
+                <div class="camera-frame">
+                    <img class="camera-feed" src="{{ url_for('video', gate_name='EXIT') }}" alt="Exit camera">
+                </div>
+
+                <div class="vehicle-detail">
+                    <h4>Latest Exit Detection</h4>
+                    <div class="detail-grid">
+                        <span>Plate</span><strong id="exitPlate">{{ state.EXIT.plate }}</strong>
+                        <span>Status</span><strong id="exitStatus">{{ state.EXIT.status }}</strong>
+                        <span>Owner/Driver</span><strong id="exitOwner">{{ state.EXIT.owner }}</strong>
+                        <span>Vehicle</span><strong id="exitVehicle">{{ state.EXIT.vehicle_type }}</strong>
+                        <span>Color</span><strong id="exitColor">{{ state.EXIT.color }}</strong>
+                        <span>Access Type</span><strong id="exitAccess">{{ state.EXIT.access_type }}</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel control-panel full-width-panel manual-premium manual-option-d" id="manual">
+            <div class="panel-header premium-manual-header">
+                <div>
+                    <p class="eyebrow">Guard Override</p>
+                    <h3>Manual Barrier Control</h3>
+                </div>
+            </div>
+
+            <div class="manual-premium-grid command-pad-grid">
+                <div class="command-lane-card">
+                    <div class="command-lane-title">
+                        <span></span>
+                        <h4>Entrance Barrier</h4>
+                        <span></span>
+                    </div>
+
+                    <button class="command-pad-btn command-open" onclick="manualAction('OPEN_ENTRY')">
+                        <span class="command-icon">
+                            <span class="command-symbol command-up">▲</span>
+                            <span class="command-dot"></span>
+                        </span>
+                        <span class="command-copy">
+                            <strong>Open Entrance</strong>
+                            <small>Raise Barrier</small>
+                        </span>
+                        <span class="command-slashes"></span>
+                    </button>
+
+                    <button class="command-pad-btn command-close" onclick="manualAction('CLOSE_ENTRY')">
+                        <span class="command-icon">
+                            <span class="command-symbol command-down">▼</span>
+                            <span class="command-dot"></span>
+                        </span>
+                        <span class="command-copy">
+                            <strong>Close Entrance</strong>
+                            <small>Lower Barrier</small>
+                        </span>
+                        <span class="command-slashes"></span>
+                    </button>
+                </div>
+
+                <div class="command-lane-card">
+                    <div class="command-lane-title">
+                        <span></span>
+                        <h4>Exit Barrier</h4>
+                        <span></span>
+                    </div>
+
+                    <button class="command-pad-btn command-open" onclick="manualAction('OPEN_EXIT')">
+                        <span class="command-icon">
+                            <span class="command-symbol command-up">▲</span>
+                            <span class="command-dot"></span>
+                        </span>
+                        <span class="command-copy">
+                            <strong>Open Exit</strong>
+                            <small>Raise Barrier</small>
+                        </span>
+                        <span class="command-slashes"></span>
+                    </button>
+
+                    <button class="command-pad-btn command-close" onclick="manualAction('CLOSE_EXIT')">
+                        <span class="command-icon">
+                            <span class="command-symbol command-down">▼</span>
+                            <span class="command-dot"></span>
+                        </span>
+                        <span class="command-copy">
+                            <strong>Close Exit</strong>
+                            <small>Lower Barrier</small>
+                        </span>
+                        <span class="command-slashes"></span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="two-column management-row">
+            <div class="panel" id="vehicles">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Resident Vehicles</p>
+                        <h3>Add Registered Vehicle</h3>
+                    </div>
+                </div>
+
+                <form class="form-grid" method="POST" action="{{ url_for('add_registered_vehicle') }}">
+                    <input name="plate_number" placeholder="Plate number e.g. ABC1234" required>
+                    <input name="owner" placeholder="Owner name" required>
+
+                    <div class="field-stack">
+                        <select name="vehicle_type" id="registeredVehicleType" required onchange="toggleOtherField('registeredVehicleType', 'registeredVehicleTypeOtherWrap')">
+                            <option value="">Select vehicle type</option>
+                            <option>Sedan</option>
+                            <option>SUV</option>
+                            <option>Hatchback</option>
+                            <option>Van</option>
+                            <option>Pickup Truck</option>
+                            <option>Motorcycle</option>
+                            <option>Tricycle</option>
+                            <option>E-bike</option>
+                            <option>Delivery Van</option>
+                            <option>Others</option>
+                        </select>
+                        <div id="registeredVehicleTypeOtherWrap" class="hidden-field">
+                            <input name="vehicle_type_other" id="registeredVehicleTypeOther" placeholder="Specify other vehicle type">
+                        </div>
+                    </div>
+
+                    <input name="color" placeholder="Color e.g. Red" required>
+                    <div class="block-lot-group" data-target="address">
+                        <span class="block-lot-label">Block</span>
+                        <input type="text" inputmode="numeric" pattern="[0-9]*" class="block-lot-input" data-part="block" placeholder="No.">
+                        <span class="block-lot-label">Lot</span>
+                        <input type="text" inputmode="numeric" pattern="[0-9]*" class="block-lot-input" data-part="lot" placeholder="No.">
+                        <input type="hidden" name="address">
+                    </div>
+                    <button type="submit">Save Registered Vehicle</button>
+                </form>
+            </div>
+
+            <div class="panel" id="temporary">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Non-Resident / Delivery</p>
+                        <h3>Add Temporary Visitor</h3>
+                    </div>
+                </div>
+
+                <form class="form-grid" method="POST" action="{{ url_for('add_temp_visitor') }}">
+                    <input name="plate_number" placeholder="Plate number e.g. GRB1234" required>
+                    <input name="driver_name" placeholder="Driver name / Rider name" required>
+
+                    <div class="field-stack">
+                        <select name="vehicle_type" id="vehicleType" required onchange="toggleOtherField('vehicleType', 'vehicleTypeOtherWrap')">
+                            <option value="">Select vehicle type</option>
+                            <option>Sedan</option>
+                            <option>SUV</option>
+                            <option>Hatchback</option>
+                            <option>Van</option>
+                            <option>Pickup Truck</option>
+                            <option>Motorcycle</option>
+                            <option>Tricycle</option>
+                            <option>Delivery Van</option>
+                            <option>Others</option>
+                        </select>
+                        <div id="vehicleTypeOtherWrap" class="hidden-field">
+                            <input name="vehicle_type_other" id="vehicleTypeOther" placeholder="Specify other vehicle type">
+                        </div>
+                    </div>
+
+                    <div class="field-stack">
+                        <select name="purpose" id="purpose" onchange="toggleOtherField('purpose', 'purposeOtherWrap')">
+                            <option value="">Select purpose</option>
+                            <option>Grab / Food Delivery</option>
+                            <option>Parcel Delivery / Courier</option>
+                            <option>Ride-Hailing Pickup</option>
+                            <option>Ride-Hailing Drop-off</option>
+                            <option>Visitor</option>
+                            <option>Service Vehicle</option>
+                            <option>Contractor / Maintenance</option>
+                            <option>Emergency</option>
+                            <option>Others</option>
+                        </select>
+                        <div id="purposeOtherWrap" class="hidden-field">
+                            <input name="purpose_other" id="purposeOther" placeholder="Specify other purpose">
+                        </div>
+                    </div>
+
+                    <input name="color" placeholder="Color e.g. Black">
+                    <div class="block-lot-group" data-target="destination">
+                        <span class="block-lot-label">Block</span>
+                        <input type="text" inputmode="numeric" pattern="[0-9]*" class="block-lot-input" data-part="block" placeholder="No.">
+                        <span class="block-lot-label">Lot</span>
+                        <input type="text" inputmode="numeric" pattern="[0-9]*" class="block-lot-input" data-part="lot" placeholder="No.">
+                        <input type="hidden" name="destination">
+                    </div>
+
+                    <select name="valid_minutes">
+                        <option value="15">Valid for 15 minutes</option>
+                        <option value="30">Valid for 30 minutes</option>
+                        <option value="60">Valid for 1 hour</option>
+                    </select>
+
+                    <div></div>
+                    <button type="submit">Grant Temporary Access</button>
+                </form>
+            </div>
+        </section>
+
+        <section class="two-column management-row">
+            <div class="panel monitor-panel">
+                <div class="panel-header">
+                    <div>
+                        <p class="eyebrow">Inside Subdivision</p>
+                        <h3>Currently Inside</h3>
+                    </div>
+                </div>
+
+                <div class="table-wrap compact-table" id="insideTableWrap">
+                    <table id="insideTable">
+                        <thead>
+                            <tr>
+                                <th>Plate</th>
+                                <th>Owner/Driver</th>
+                                <th>Vehicle</th>
+                                <th>Access</th>
+                                <th>Status</th>
+                                <th>Entry Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for row in inside %}
+                            <tr class="{% if row.status_class == 'overstayed' or row.status_class == 'overstaying' %}overstayed-row{% endif %}">
+                                <td>{{ row.plate_number }}</td>
+                                <td>{{ row.owner_or_driver }}</td>
+                                <td>{{ row.vehicle_type }}</td>
+                                <td>{{ row.access_type }}</td>
+                                <td>
+                                    {% if row.status_class == 'overstayed' or row.status_class == 'overstaying' %}
+                                        <span class="inside-status-badge overstayed">OVERSTAYED</span>
+                                    {% elif row.status_class == 'temporary' %}
+                                        <span class="inside-status-badge temporary">Temporary</span>
+                                    {% else %}
+                                        <span class="inside-status-badge normal">Inside</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ row.entry_time }}</td>
+                            </tr>
+                        {% else %}
+                            <tr><td colspan="6">No vehicles currently inside.</td></tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel monitor-panel" id="activeTemporary">
+            <div class="panel-header">
+                <div>
+                    <p class="eyebrow">Active Temporary Access</p>
+                    <h3>Temporary Visitors</h3>
+                </div>
+            </div>
+
+            <div class="table-wrap compact-table" id="tempVisitorsWrap">
+                <table id="tempVisitorsTable">
+                    <thead>
+                        <tr>
+                            <th>Plate</th>
+                            <th>Driver</th>
+                            <th>Vehicle</th>
+                            <th>Purpose</th>
+                            <th>Destination</th>
+                            <th>Status</th>
+                            <th>Valid Until</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in visitors %}
+                        <tr>
+                            <td>{{ row.plate_number }}</td>
+                            <td>{{ row.driver_name }}</td>
+                            <td>{{ row.vehicle_type }}</td>
+                            <td>{{ row.purpose }}</td>
+                            <td>{{ row.destination }}</td>
+                            <td>
+                                {% if row.visitor_display_status == 'OVERSTAYED' %}
+                                    <span class="temp-pass-tag overstayed">Overstayed</span>
+                                {% elif row.visitor_display_status == 'INSIDE' %}
+                                    <span class="temp-pass-tag inside">Inside</span>
+                                {% else %}
+                                    <span class="temp-pass-tag active">Active</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ row.valid_until }}</td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="7">No active temporary visitors.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            </div>
+        </section>
+
+        <section class="panel" id="logs">
+            <div class="panel-header">
+                <div>
+                    <p class="eyebrow">Reports / Activity</p>
+                    <h3>Recent Gate Activity</h3>
+                </div>
+            </div>
+
+            <div class="log-toolbar" data-log-toolbar="gate">
+                <div class="log-search-wrap">
+                    <span>Search</span>
+                    <input id="gateLogSearch" type="text" placeholder="Plate, name, status, remarks...">
+                </div>
+
+                <div class="log-filter-wrap">
+                    <span>Gate</span>
+                    <select id="gateLogGateFilter">
+                        <option value="">All Gates</option>
+                        <option value="ENTRY">Entry</option>
+                        <option value="EXIT">Exit</option>
+                    </select>
+                </div>
+
+                <div class="log-filter-wrap">
+                    <span>Status</span>
+                    <select id="gateLogStatusFilter">
+                        <option value="">All Status</option>
+                        <option value="ACCESS GRANTED">Access Granted</option>
+                        <option value="ACCESS DENIED">Access Denied</option>
+                        <option value="EXIT GRANTED">Exit Granted</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table id="logsTable">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Plate</th>
+                            <th>Name</th>
+                            <th>Vehicle</th>
+                            <th>Gate</th>
+                            <th>Status</th>
+                            <th>Access</th>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in logs %}
+                        <tr>
+                            <td>{{ row.timestamp }}</td>
+                            <td>{{ row.plate_number }}</td>
+                            <td>{{ row.owner_or_driver }}</td>
+                            <td>{{ row.vehicle_type }}</td>
+                            <td>{{ row.gate }}</td>
+                            <td><span class="status-pill">{{ row.status }}</span></td>
+                            <td>{{ row.access_type }}</td>
+                            <td>{{ row.remarks }}</td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="8">No gate activity yet.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="panel dashboard-activity-panel" id="dashboardActivityLogs">
+            <div class="panel-header">
+                <div>
+                    <p class="eyebrow">Dashboard Activity</p>
+                    <h3>Registration & Temporary Access Logs</h3>
+                </div>
+            </div>
+
+            <div class="log-toolbar" data-log-toolbar="dashboard">
+                <div class="log-search-wrap">
+                    <span>Search</span>
+                    <input id="dashboardLogSearch" type="text" placeholder="Plate, name, action, details...">
+                </div>
+
+                <div class="log-filter-wrap">
+                    <span>Action</span>
+                    <select id="dashboardLogActionFilter">
+                        <option value="">All Actions</option>
+                        <option value="TEMP ACCESS CREATED">Temp Access Created</option>
+                        <option value="REGISTERED VEHICLE SAVED">Registered Vehicle Saved</option>
+                    </select>
+                </div>
+
+                <div class="log-filter-wrap">
+                    <span>Access</span>
+                    <select id="dashboardLogAccessFilter">
+                        <option value="">All Access</option>
+                        <option value="Temporary Visitor">Temporary Visitor</option>
+                        <option value="Resident">Resident</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table id="dashboardLogsTable">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Plate</th>
+                            <th>Name</th>
+                            <th>Vehicle</th>
+                            <th>Action</th>
+                            <th>Access</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for row in dashboard_logs %}
+                        <tr>
+                            <td>{{ row.timestamp }}</td>
+                            <td>{{ row.plate_number }}</td>
+                            <td>{{ row.owner_or_driver }}</td>
+                            <td>{{ row.vehicle_type }}</td>
+                            <td><span class="status-pill dashboard-action-pill">{{ row.status }}</span></td>
+                            <td>{{ row.access_type }}</td>
+                            <td>{{ row.remarks }}</td>
+                        </tr>
+                    {% else %}
+                        <tr><td colspan="7">No dashboard activity yet.</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        async function manualAction(action) {
+            const status = document.getElementById('manualStatus');
+
+            try {
+                const response = await fetch(`/manual/${action}`, { method: 'POST' });
+                const data = await response.json();
+
+                console.log(data.message);
+
+                if (status) {
+                    status.textContent = data.message;
+                }
+
+                refreshDashboard();
+            } catch (error) {
+                console.log('Manual action failed:', error);
+
+                if (status) {
+                    status.textContent = 'Manual action failed.';
+                }
+            }
+        }
+
+        function setText(id, value) {
+            const element = document.getElementById(id);
+            if (element) element.textContent = value || '-';
+        }
+
+        function toggleOtherField(selectId, wrapperId) {
+            const select = document.getElementById(selectId);
+            const wrapper = document.getElementById(wrapperId);
+            const input = wrapper ? wrapper.querySelector('input') : null;
+
+            if (!select || !wrapper) return;
+
+            if (select.value === 'Others') {
+                wrapper.style.display = 'block';
+                if (input) input.required = true;
+            } else {
+                wrapper.style.display = 'none';
+                if (input) {
+                    input.required = false;
+                    input.value = '';
+                }
+            }
+        }
+
+        function renderInsideTable(inside) {
+            const table = document.querySelector('#insideTable tbody');
+            if (!table) return;
+
+            if (!inside || inside.length === 0) {
+                table.innerHTML = '<tr><td colspan="6">No vehicles currently inside.</td></tr>';
+                return;
+            }
+
+            table.innerHTML = inside.map(row => {
+                const isOverstayed = row.status_class === 'overstayed' || row.status_class === 'overstaying';
+                const isTemporary = row.status_class === 'temporary';
+
+                let statusBadge = '<span class="inside-status-badge normal">Inside</span>';
+
+                if (isOverstayed) {
+                    statusBadge = '<span class="inside-status-badge overstayed">OVERSTAYED</span>';
+                } else if (isTemporary) {
+                    statusBadge = '<span class="inside-status-badge temporary">Temporary</span>';
+                }
+
+                return `
+                    <tr class="${isOverstayed ? 'overstayed-row' : ''}">
+                        <td>${row.plate_number || '-'}</td>
+                        <td>${row.owner_or_driver || '-'}</td>
+                        <td>${row.vehicle_type || '-'}</td>
+                        <td>${row.access_type || '-'}</td>
+                        <td>${statusBadge}</td>
+                        <td>${row.entry_time || '-'}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function normalizedText(value) {
+            return String(value || '').toLowerCase().trim();
+        }
+
+        function rowContains(row, searchValue) {
+            if (!searchValue) return true;
+            return Object.values(row).some(value => normalizedText(value).includes(searchValue));
+        }
+
+        function getSelectValue(id) {
+            const element = document.getElementById(id);
+            return element ? element.value : '';
+        }
+
+        function getInputValue(id) {
+            const element = document.getElementById(id);
+            return element ? normalizedText(element.value) : '';
+        }
+
+        function filterGateLogs(logs) {
+            const searchValue = getInputValue('gateLogSearch');
+            const gateValue = getSelectValue('gateLogGateFilter');
+            const statusValue = getSelectValue('gateLogStatusFilter');
+
+            return (logs || []).filter(row => {
+                const matchesSearch = rowContains(row, searchValue);
+                const matchesGate = !gateValue || row.gate === gateValue;
+                const matchesStatus = !statusValue || row.status === statusValue;
+
+                return matchesSearch && matchesGate && matchesStatus;
+            });
+        }
+
+        function filterDashboardLogs(logs) {
+            const searchValue = getInputValue('dashboardLogSearch');
+            const actionValue = getSelectValue('dashboardLogActionFilter');
+            const accessValue = getSelectValue('dashboardLogAccessFilter');
+
+            return (logs || []).filter(row => {
+                const matchesSearch = rowContains(row, searchValue);
+                const matchesAction = !actionValue || row.status === actionValue;
+                const matchesAccess = !accessValue || row.access_type === accessValue;
+
+                return matchesSearch && matchesAction && matchesAccess;
+            });
+        }
+
+        let latestGateLogsCache = [];
+        let latestDashboardLogsCache = [];
+
+        function renderLogsTable(logs) {
+            latestGateLogsCache = logs || [];
+
+            const table = document.querySelector('#logsTable tbody');
+            if (!table) return;
+
+            const filteredLogs = filterGateLogs(latestGateLogsCache);
+
+            if (latestGateLogsCache.length === 0) {
+                table.innerHTML = '<tr><td colspan="8">No gate activity yet.</td></tr>';
+                return;
+            }
+
+            if (filteredLogs.length === 0) {
+                table.innerHTML = '<tr><td colspan="8">No matching gate activity found.</td></tr>';
+                return;
+            }
+
+            table.innerHTML = filteredLogs.map(row => `
+                <tr>
+                    <td>${row.timestamp || '-'}</td>
+                    <td>${row.plate_number || '-'}</td>
+                    <td>${row.owner_or_driver || '-'}</td>
+                    <td>${row.vehicle_type || '-'}</td>
+                    <td>${row.gate || '-'}</td>
+                    <td><span class="status-pill">${row.status || '-'}</span></td>
+                    <td>${row.access_type || '-'}</td>
+                    <td>${row.remarks || '-'}</td>
+                </tr>
+            `).join('');
+        }
+
+
+        function renderDashboardLogsTable(logs) {
+            latestDashboardLogsCache = logs || [];
+
+            const table = document.querySelector('#dashboardLogsTable tbody');
+            if (!table) return;
+
+            const filteredLogs = filterDashboardLogs(latestDashboardLogsCache);
+
+            if (latestDashboardLogsCache.length === 0) {
+                table.innerHTML = '<tr><td colspan="7">No dashboard activity yet.</td></tr>';
+                return;
+            }
+
+            if (filteredLogs.length === 0) {
+                table.innerHTML = '<tr><td colspan="7">No matching dashboard activity found.</td></tr>';
+                return;
+            }
+
+            table.innerHTML = filteredLogs.map(row => `
+                <tr>
+                    <td>${row.timestamp || '-'}</td>
+                    <td>${row.plate_number || '-'}</td>
+                    <td>${row.owner_or_driver || '-'}</td>
+                    <td>${row.vehicle_type || '-'}</td>
+                    <td><span class="status-pill dashboard-action-pill">${row.status || '-'}</span></td>
+                    <td>${row.access_type || '-'}</td>
+                    <td>${row.remarks || '-'}</td>
+                </tr>
+            `).join('');
+        }
+
+        function setupLogFilters() {
+            const gateControls = [
+                'gateLogSearch',
+                'gateLogGateFilter',
+                'gateLogStatusFilter'
+            ];
+
+            const dashboardControls = [
+                'dashboardLogSearch',
+                'dashboardLogActionFilter',
+                'dashboardLogAccessFilter'
+            ];
+
+            gateControls.forEach(id => {
+                const element = document.getElementById(id);
+                if (!element) return;
+
+                element.addEventListener('input', () => renderLogsTable(latestGateLogsCache));
+                element.addEventListener('change', () => renderLogsTable(latestGateLogsCache));
+            });
+
+            dashboardControls.forEach(id => {
+                const element = document.getElementById(id);
+                if (!element) return;
+
+                element.addEventListener('input', () => renderDashboardLogsTable(latestDashboardLogsCache));
+                element.addEventListener('change', () => renderDashboardLogsTable(latestDashboardLogsCache));
+            });
+        }
+
+        function ensureTemporaryVisitorsStatusColumn() {
+            const table = document.querySelector('#tempVisitorsTable');
+            if (!table) return;
+
+            const headRow = table.querySelector('thead tr');
+            if (!headRow) return;
+
+            headRow.innerHTML = `
+                <th>Plate</th>
+                <th>Driver</th>
+                <th>Vehicle</th>
+                <th>Purpose</th>
+                <th>Destination</th>
+                <th>Status</th>
+                <th>Valid Until</th>
+            `;
+        }
+
+        function renderVisitorsTable(visitors) {
+            ensureTemporaryVisitorsStatusColumn();
+
+            const visitorsTable = document.querySelector('#tempVisitorsTable tbody');
+            if (!visitorsTable) return;
+
+            if (!visitors || visitors.length === 0) {
+                visitorsTable.innerHTML = '<tr><td colspan="7">No active temporary visitors.</td></tr>';
+                return;
+            }
+
+            visitorsTable.innerHTML = visitors.map(row => {
+                let statusText = '<span class="temp-pass-tag active">Active</span>';
+
+                if (row.visitor_display_status === 'OVERSTAYED') {
+                    statusText = '<span class="temp-pass-tag overstayed">Overstayed</span>';
+                } else if (row.visitor_display_status === 'INSIDE') {
+                    statusText = '<span class="temp-pass-tag inside">Inside</span>';
+                }
+
+                const rowClass = row.visitor_display_status === 'OVERSTAYED'
+                    ? 'temp-overstayed-row'
+                    : '';
+
+                return `
+                    <tr class="${rowClass}">
+                        <td>${row.plate_number || '-'}</td>
+                        <td>${row.driver_name || '-'}</td>
+                        <td>${row.vehicle_type || '-'}</td>
+                        <td>${row.purpose || '-'}</td>
+                        <td>${row.destination || '-'}</td>
+                        <td>${statusText}</td>
+                        <td>${row.valid_until || '-'}</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        async function refreshDashboard() {
+            try {
+                const response = await fetch(`/api/state?t=${Date.now()}`, { cache: 'no-store' });
+                const data = await response.json();
+
+                setText('entriesToday', data.stats.entries_today);
+                setText('exitsToday', data.stats.exits_today);
+                setText('currentlyInside', data.stats.currently_inside);
+                setText('deniedToday', data.stats.denied_today);
+                setText('activeTemp', data.stats.active_temp);
+
+                setText('entryPlate', data.entry.plate);
+                setText('entryStatus', data.entry.status);
+                setText('entryOwner', data.entry.owner);
+                setText('entryVehicle', data.entry.vehicle_type);
+                setText('entryColor', data.entry.color);
+                setText('entryAccess', data.entry.access_type);
+
+                setText('exitPlate', data.exit.plate);
+                setText('exitStatus', data.exit.status);
+                setText('exitOwner', data.exit.owner);
+                setText('exitVehicle', data.exit.vehicle_type);
+                setText('exitColor', data.exit.color);
+                setText('exitAccess', data.exit.access_type);
+
+                try {
+                    renderInsideTable(data.inside);
+                } catch (error) {
+                    console.log('Inside table refresh failed:', error);
+                }
+
+                try {
+                    renderLogsTable(data.logs);
+                } catch (error) {
+                    console.log('Logs table refresh failed:', error);
+                }
+
+                try {
+                    renderVisitorsTable(data.visitors);
+                } catch (error) {
+                    console.log('Temporary visitors refresh failed:', error);
+                }
+
+                try {
+                    renderDashboardLogsTable(data.dashboard_logs);
+                } catch (error) {
+                    console.log('Dashboard activity logs refresh failed:', error);
+                }
+            } catch (error) {
+                console.log('Dashboard refresh failed:', error);
+            }
+        }
+
+
+        function setActiveNav(targetId) {
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+            navLinks.forEach(link => {
+                const linkTarget = link.getAttribute('href').replace('#', '');
+                link.classList.toggle('active', linkTarget === targetId);
+            });
+        }
+
+        let navClickLockUntil = 0;
+
+        function updateActiveNav() {
+            // Do not let scroll events instantly return the highlight to Overview
+            // while the browser is still smooth-scrolling after a sidebar click.
+            if (Date.now() < navClickLockUntil) return;
+
+            const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"]'));
+            const scrollPoint = window.scrollY + 260;
+            let currentId = 'overview';
+
+            navLinks.forEach(link => {
+                const targetId = link.getAttribute('href').replace('#', '');
+                const section = document.getElementById(targetId);
+
+                if (!section) return;
+
+                const sectionTop = section.getBoundingClientRect().top + window.scrollY;
+
+                if (sectionTop <= scrollPoint) {
+                    currentId = targetId;
+                }
+            });
+
+            // If user is near the bottom, force the last section highlight.
+            if ((window.innerHeight + window.scrollY) >= (document.body.scrollHeight - 20)) {
+                const lastLink = navLinks[navLinks.length - 1];
+                if (lastLink) currentId = lastLink.getAttribute('href').replace('#', '');
+            }
+
+            setActiveNav(currentId);
+        }
+
+        function setupSidebarNavClicks() {
+            const navLinks = document.querySelectorAll('nav a[href^="#"]');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    const targetId = link.getAttribute('href').replace('#', '');
+                    navClickLockUntil = Date.now() + 900;
+                    setActiveNav(targetId);
+
+                    setTimeout(() => {
+                        navClickLockUntil = 0;
+                        updateActiveNav();
+                    }, 950);
+                });
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveNav, { passive: true });
+        window.addEventListener('hashchange', () => {
+            const targetId = window.location.hash.replace('#', '') || 'overview';
+            setActiveNav(targetId);
+            setTimeout(updateActiveNav, 800);
+        });
+
+        window.addEventListener('load', () => {
+            setupSidebarNavClicks();
+
+            const targetId = window.location.hash.replace('#', '') || 'overview';
+            setActiveNav(targetId);
+
+            setTimeout(updateActiveNav, 300);
+        });
+
+        
+        function toggleSidebar() {
+            document.body.classList.toggle('sidebar-collapsed');
+
+            try {
+                localStorage.setItem(
+                    'eastaccessSidebarCollapsed',
+                    document.body.classList.contains('sidebar-collapsed') ? '1' : '0'
+                );
+            } catch (error) {
+                console.log('Sidebar state save failed:', error);
+            }
+        }
+
+        function loadSidebarState() {
+            try {
+                const collapsed = localStorage.getItem('eastaccessSidebarCollapsed');
+                if (collapsed === '1') {
+                    document.body.classList.add('sidebar-collapsed');
+                }
+            } catch (error) {
+                console.log('Sidebar state load failed:', error);
+            }
+        }
+
+        loadSidebarState();
+
+        toggleOtherField('vehicleType', 'vehicleTypeOtherWrap');
+        toggleOtherField('purpose', 'purposeOtherWrap');
+        toggleOtherField('registeredVehicleType', 'registeredVehicleTypeOtherWrap');
+
+
+        function setupPlateUppercase() {
+            const plateInputs = document.querySelectorAll('input[name="plate_number"]');
+
+            plateInputs.forEach(input => {
+                input.setAttribute('autocomplete', 'off');
+                input.setAttribute('autocapitalize', 'characters');
+                input.style.textTransform = 'uppercase';
+
+                input.addEventListener('input', () => {
+                    const cursorPosition = input.selectionStart;
+                    input.value = input.value.toUpperCase();
+                    input.setSelectionRange(cursorPosition, cursorPosition);
+                });
+            });
+        }
+
+
+        function toTitleCaseName(value) {
+            return value
+                .toLowerCase()
+                .replace(/\b([a-zñ])/g, letter => letter.toUpperCase())
+                .replace(/\s+/g, ' ')
+                .replace(/(^\s+|\s+$)/g, '');
+        }
+
+        function setupNameAutoTitleCase() {
+            const nameInputs = document.querySelectorAll('input[name="owner"], input[name="driver_name"]');
+
+            nameInputs.forEach(input => {
+                input.setAttribute('autocomplete', 'off');
+
+                input.addEventListener('blur', () => {
+                    input.value = toTitleCaseName(input.value);
+                });
+
+                input.addEventListener('input', () => {
+                    const cursorPosition = input.selectionStart;
+                    const oldLength = input.value.length;
+
+                    input.value = input.value
+                        .replace(/\b([a-zñ])/g, letter => letter.toUpperCase())
+                        .replace(/\B([A-ZÑ])/g, letter => letter.toLowerCase());
+
+                    const newLength = input.value.length;
+                    input.setSelectionRange(
+                        Math.max(0, cursorPosition + (newLength - oldLength)),
+                        Math.max(0, cursorPosition + (newLength - oldLength))
+                    );
+                });
+            });
+        }
+
+        function formatBlockLotValue(value) {
+            const trimmed = value.trim();
+
+            if (!trimmed) return '';
+
+            if (/block/i.test(trimmed) && /lot/i.test(trimmed)) {
+                return trimmed.replace(/\bblock\b/i, 'Block').replace(/\blot\b/i, 'Lot');
+            }
+
+            const parts = trimmed.match(/[A-Za-z0-9]+/g) || [];
+
+            if (parts.length >= 2) {
+                return `Block ${parts[0]} Lot ${parts[1]}`;
+            }
+
+            if (parts.length === 1) {
+                return `Block ${parts[0]} Lot`;
+            }
+
+            return trimmed;
+        }
+
+
+        function setupBlockLotAutoFormat() {
+            const groups = document.querySelectorAll('.block-lot-group');
+
+            groups.forEach(group => {
+                const targetName = group.dataset.target;
+                const blockInput = group.querySelector('[data-part="block"]');
+                const lotInput = group.querySelector('[data-part="lot"]');
+                const hiddenInput = group.querySelector(`input[name="${targetName}"]`);
+
+                const numbersOnly = (input) => {
+                    if (!input) return;
+                    input.value = input.value.replace(/[^0-9]/g, '');
+                };
+
+                const updateHidden = () => {
+                    numbersOnly(blockInput);
+                    numbersOnly(lotInput);
+
+                    const block = (blockInput?.value || '').trim();
+                    const lot = (lotInput?.value || '').trim();
+
+                    if (hiddenInput) {
+                        hiddenInput.value = block || lot ? `Block ${block} Lot ${lot}` : '';
+                    }
+                };
+
+                blockInput?.addEventListener('input', updateHidden);
+                lotInput?.addEventListener('input', updateHidden);
+
+                group.closest('form')?.addEventListener('submit', updateHidden);
+            });
+        }
+
+
+        function setupAjaxForms() {
+            const forms = document.querySelectorAll('#vehicles form, #temporary form');
+
+            forms.forEach(form => {
+                form.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    form.querySelectorAll('.block-lot-group').forEach(group => {
+                        const targetName = group.dataset.target;
+                        const block = (group.querySelector('[data-part="block"]')?.value || '').trim();
+                        const lot = (group.querySelector('[data-part="lot"]')?.value || '').trim();
+                        const hiddenInput = group.querySelector(`input[name="${targetName}"]`);
+
+                        if (hiddenInput) {
+                            hiddenInput.value = block || lot ? `Block ${block} Lot ${lot}` : '';
+                        }
+                    });
+
+                    const button = form.querySelector('button[type="submit"]');
+                    const originalText = button ? button.textContent : '';
+
+                    try {
+                        if (button) {
+                            button.disabled = true;
+                            button.textContent = 'Saving...';
+                        }
+
+                        const response = await fetch(form.action, {
+                            method: 'POST',
+                            body: new FormData(form),
+                            cache: 'no-store',
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Accept': 'application/json'
+                            }
+                        });
+
+                        if (!response.ok) {
+                            console.log('Form submit error:', await response.text());
+                            return;
+                        }
+
+                        form.reset();
+
+                        toggleOtherField('vehicleType', 'vehicleTypeOtherWrap');
+                        toggleOtherField('purpose', 'purposeOtherWrap');
+                        toggleOtherField('registeredVehicleType', 'registeredVehicleTypeOtherWrap');
+
+                        await refreshDashboard();
+                    } catch (error) {
+                        console.log('Form submit failed:', error);
+                    } finally {
+                        if (button) {
+                            button.disabled = false;
+                            button.textContent = originalText;
+                        }
+                    }
+                });
+            });
+        }
+
+        ensureTemporaryVisitorsStatusColumn();
+        setupLogFilters();
+        setupPlateUppercase();
+        setupNameAutoTitleCase();
+        setupBlockLotAutoFormat();
+        setupAjaxForms();
+        refreshDashboard();
+        setInterval(refreshDashboard, 1000);
+    </script>
+</body>
+</html>

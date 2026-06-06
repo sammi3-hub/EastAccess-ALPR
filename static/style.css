@@ -1,0 +1,6217 @@
+* {
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #020617;
+    --panel: rgba(15, 23, 42, 0.76);
+    --panel-strong: rgba(8, 13, 31, 0.94);
+    --text: #f8fafc;
+    --muted: #9fb4d0;
+    --soft: #dbeafe;
+    --line: rgba(148, 163, 184, 0.18);
+    --cyan: #22d3ee;
+    --blue: #38bdf8;
+    --teal: #14b8a6;
+    --green: #22c55e;
+    --red: #ef4444;
+    --orange: #f97316;
+    --shadow: 0 28px 80px rgba(0, 0, 0, 0.35);
+}
+
+*::selection {
+    background: rgba(34, 211, 238, 0.28);
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: Inter, Segoe UI, Arial, sans-serif;
+    overflow-x: hidden;
+}
+
+.aurora {
+    position: fixed;
+    width: 520px;
+    height: 520px;
+    border-radius: 999px;
+    filter: blur(80px);
+    opacity: 0.28;
+    pointer-events: none;
+    z-index: -3;
+}
+
+.aurora-one {
+    top: -160px;
+    left: 230px;
+    background: #0ea5e9;
+    animation: floatGlow 11s ease-in-out infinite alternate;
+}
+
+.aurora-two {
+    right: -140px;
+    bottom: -160px;
+    background: #22c55e;
+    animation: floatGlow 14s ease-in-out infinite alternate-reverse;
+}
+
+.grid-bg {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -4;
+    background:
+        linear-gradient(rgba(34, 211, 238, 0.055) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(34, 211, 238, 0.055) 1px, transparent 1px),
+        radial-gradient(circle at 70% 20%, rgba(20, 184, 166, 0.16), transparent 30rem),
+        radial-gradient(circle at 20% 80%, rgba(56, 189, 248, 0.12), transparent 30rem);
+    background-size: 46px 46px, 46px 46px, auto, auto;
+    mask-image: linear-gradient(to bottom, black, transparent 85%);
+}
+
+@keyframes floatGlow {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+        transform: translate3d(40px, 30px, 0) scale(1.12);
+    }
+}
+
+.sidebar {
+    position: fixed;
+    inset: 18px auto 18px 18px;
+    width: 286px;
+    padding: 22px;
+    background:
+        linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(2, 6, 23, 0.78));
+    border: 1px solid rgba(34, 211, 238, 0.18);
+    border-radius: 30px;
+    backdrop-filter: blur(24px);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.sidebar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(135deg, rgba(34, 211, 238, 0.18), transparent 35%),
+        linear-gradient(315deg, rgba(34, 197, 94, 0.12), transparent 38%);
+    pointer-events: none;
+}
+
+.brand,
+nav,
+.side-card {
+    position: relative;
+    z-index: 1;
+}
+
+.brand {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    margin-bottom: 34px;
+}
+
+.brand-logo-wrap {
+    width: 64px;
+    height: 64px;
+    display: grid;
+    place-items: center;
+    border-radius: 22px;
+    background: radial-gradient(circle at 30% 20%, rgba(34, 211, 238, 0.32), rgba(15, 23, 42, 0.65));
+    border: 1px solid rgba(34, 211, 238, 0.28);
+    box-shadow: 0 0 28px rgba(34, 211, 238, 0.18);
+}
+
+.brand-logo {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    border-radius: 18px;
+    background: white;
+    padding: 4px;
+}
+
+.brand h1 {
+    margin: 0;
+    font-size: 23px;
+    letter-spacing: -0.03em;
+}
+
+.brand p {
+    margin: 3px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+nav {
+    display: grid;
+    gap: 8px;
+}
+
+nav a {
+    color: var(--muted);
+    text-decoration: none;
+    padding: 13px 14px;
+    border-radius: 16px;
+    transition: 0.2s ease;
+    border: 1px solid transparent;
+}
+
+nav a:hover,
+nav a.active {
+    color: var(--text);
+    background: rgba(34, 211, 238, 0.10);
+    border-color: rgba(34, 211, 238, 0.18);
+    box-shadow: inset 0 0 18px rgba(34, 211, 238, 0.055);
+}
+
+.side-card {
+    margin-top: 28px;
+    padding: 14px;
+    border-radius: 20px;
+    background: rgba(2, 6, 23, 0.52);
+    border: 1px solid rgba(34, 211, 238, 0.16);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.side-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background: var(--green);
+    box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.12), 0 0 24px rgba(34, 197, 94, 0.7);
+}
+
+.side-card strong {
+    display: block;
+    font-size: 13px;
+}
+
+.side-card p {
+    margin: 3px 0 0;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.main {
+    margin-left: 322px;
+    padding: 18px 28px 34px;
+}
+
+.hero {
+    position: relative;
+    min-height: 300px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 240px;
+    align-items: center;
+    gap: 28px;
+    padding: 36px;
+    border: 1px solid rgba(34, 211, 238, 0.18);
+    border-radius: 34px;
+    background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(8, 13, 31, 0.68)),
+        radial-gradient(circle at 95% 15%, rgba(34, 211, 238, 0.24), transparent 20rem);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.hero::before {
+    content: "";
+    position: absolute;
+    inset: -2px;
+    background:
+        linear-gradient(120deg, transparent, rgba(34, 211, 238, 0.14), transparent);
+    transform: translateX(-100%);
+    animation: sweep 6s ease-in-out infinite;
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    right: 30px;
+    bottom: 20px;
+    width: 46%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.55), transparent);
+}
+
+@keyframes sweep {
+    0%, 42% {
+        transform: translateX(-100%);
+    }
+    70%, 100% {
+        transform: translateX(100%);
+    }
+}
+
+.hero-copy,
+.hero-orb {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 9px 13px;
+    border-radius: 999px;
+    color: #c8f7ff;
+    background: rgba(34, 211, 238, 0.10);
+    border: 1px solid rgba(34, 211, 238, 0.18);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.hero h2 {
+    margin: 0;
+    max-width: none;
+    white-space: nowrap;
+    font-size: clamp(32px, 3.6vw, 54px);
+    letter-spacing: -0.065em;
+    line-height: 1.02;
+    text-shadow: 0 0 28px rgba(34, 211, 238, 0.10);
+}
+
+.hero-text {
+    max-width: 860px;
+    color: #b8cae6;
+    line-height: 1.8;
+    font-size: 16px;
+}
+
+.hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.hero-actions a {
+    text-decoration: none;
+    color: var(--text);
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.72);
+    border: 1px solid rgba(34, 211, 238, 0.20);
+    transition: 0.2s ease;
+}
+
+.hero-actions a:first-child {
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.92), rgba(34, 197, 94, 0.88));
+    color: #020617;
+    font-weight: 900;
+}
+
+.hero-actions a:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+}
+
+.hero-orb {
+    min-height: 230px;
+    display: grid;
+    place-items: center;
+}
+
+.hero-logo {
+    width: 160px;
+    height: 160px;
+    object-fit: contain;
+    border-radius: 34px;
+    background: rgba(255, 255, 255, 0.96);
+    padding: 9px;
+    box-shadow:
+        0 22px 50px rgba(0, 0, 0, 0.35),
+        0 0 58px rgba(34, 211, 238, 0.16);
+    z-index: 2;
+}
+
+.orb-ring {
+    position: absolute;
+    border-radius: 999px;
+    border: 1px solid rgba(34, 211, 238, 0.32);
+    box-shadow: 0 0 34px rgba(34, 211, 238, 0.10);
+}
+
+.ring-one {
+    width: 220px;
+    height: 220px;
+    animation: spin 18s linear infinite;
+}
+
+.ring-two {
+    width: 180px;
+    height: 180px;
+    border-color: rgba(34, 197, 94, 0.24);
+    animation: spin 13s linear infinite reverse;
+}
+
+.ring-one::before,
+.ring-two::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 50%;
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--cyan);
+    box-shadow: 0 0 18px var(--cyan);
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.system-status {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    border-radius: 999px;
+    background: rgba(34, 197, 94, 0.12);
+    color: #bbf7d0;
+    border: 1px solid rgba(34, 197, 94, 0.24);
+    white-space: nowrap;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+}
+
+.pulse {
+    width: 10px;
+    height: 10px;
+    background: var(--green);
+    border-radius: 999px;
+    box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.8);
+    animation: pulse 1.6s infinite;
+}
+
+@keyframes pulse {
+    70% {
+        box-shadow: 0 0 0 12px rgba(34, 197, 94, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+    }
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(150px, 1fr));
+    gap: 16px;
+    margin: 22px 0;
+}
+
+.stat-card,
+.panel {
+    position: relative;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    border-radius: 28px;
+    background:
+        linear-gradient(180deg, rgba(15, 23, 42, 0.82), rgba(2, 6, 23, 0.70));
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.25);
+    overflow: hidden;
+}
+
+.stat-card::before,
+.panel::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(34, 211, 238, 0.10), transparent 36%);
+    pointer-events: none;
+}
+
+.stat-card {
+    padding: 20px;
+}
+
+.stat-card p,
+.stat-card span {
+    position: relative;
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.stat-card h3 {
+    position: relative;
+    margin: 10px 0 3px;
+    font-size: 38px;
+    letter-spacing: -0.04em;
+}
+
+.stat-card.danger h3 {
+    color: #ff7b7b;
+}
+
+.camera-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(340px, 1fr));
+    gap: 22px;
+    margin-bottom: 22px;
+}
+
+.panel {
+    padding: 20px;
+}
+
+.panel > * {
+    position: relative;
+    z-index: 1;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.panel-header h3 {
+    margin: 0;
+    font-size: 23px;
+    letter-spacing: -0.03em;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    color: var(--cyan);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 900;
+}
+
+.badge {
+    padding: 7px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.badge.green {
+    background: rgba(34, 197, 94, 0.12);
+    color: #bbf7d0;
+    border: 1px solid rgba(34, 197, 94, 0.24);
+}
+
+.camera-frame {
+    padding: 8px;
+    border-radius: 24px;
+    background:
+        linear-gradient(135deg, rgba(34, 211, 238, 0.35), rgba(34, 197, 94, 0.20)),
+        rgba(2, 6, 23, 0.58);
+    border: 1px solid rgba(34, 211, 238, 0.18);
+}
+
+.camera-feed {
+    display: block;
+    width: 100%;
+    border-radius: 18px;
+    background: #020617;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+.vehicle-detail {
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 20px;
+    background: rgba(2, 6, 23, 0.42);
+    border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+.vehicle-detail h4 {
+    margin: 0 0 13px;
+}
+
+.detail-grid {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    gap: 10px;
+    color: var(--muted);
+}
+
+.detail-grid strong {
+    color: var(--text);
+}
+
+.two-column {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(320px, 1fr));
+    gap: 22px;
+    margin-bottom: 22px;
+}
+
+.control-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.control-btn,
+.form-grid button {
+    border: 0;
+    border-radius: 18px;
+    padding: 14px 16px;
+    font-weight: 950;
+    cursor: pointer;
+    color: #020617;
+    transition: 0.2s ease;
+}
+
+.control-btn:hover,
+.form-grid button:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.08);
+}
+
+.control-btn.open {
+    background: linear-gradient(135deg, #22d3ee, #22c55e);
+    box-shadow: 0 12px 28px rgba(34, 211, 238, 0.18);
+}
+
+.control-btn.close {
+    background: linear-gradient(135deg, #fb923c, #ef4444);
+    color: white;
+    box-shadow: 0 12px 28px rgba(239, 68, 68, 0.18);
+}
+
+.note {
+    margin: 14px 0 0;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.form-grid input,
+.form-grid select {
+    width: 100%;
+    padding: 14px 15px;
+    border: 1px solid rgba(148, 163, 184, 0.20);
+    border-radius: 16px;
+    background: rgba(2, 6, 23, 0.58);
+    color: var(--text);
+    outline: none;
+    transition: 0.18s ease;
+}
+
+.form-grid input:focus,
+.form-grid select:focus {
+    border-color: rgba(34, 211, 238, 0.55);
+    box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.08);
+}
+
+.form-grid input::placeholder {
+    color: #7185a5;
+}
+
+.form-grid button {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, #22d3ee, #22c55e);
+}
+
+.field-stack {
+    display: grid;
+    gap: 12px;
+}
+
+.hidden-field {
+    display: none;
+}
+
+.table-wrap {
+    overflow: auto;
+}
+
+.compact-table {
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.12);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 720px;
+}
+
+th,
+td {
+    padding: 14px 13px;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.14);
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    color: #a9c3e5;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.10em;
+}
+
+td {
+    color: #e2efff;
+}
+
+.status-pill {
+    display: inline-flex;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(56, 189, 248, 0.13);
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    white-space: nowrap;
+}
+
+#logs .table-wrap {
+    max-height: 420px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+#logs thead th {
+    position: sticky;
+    top: 0;
+    background: #071126;
+    z-index: 2;
+}
+
+.table-wrap::-webkit-scrollbar,
+#logs .table-wrap::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.table-wrap::-webkit-scrollbar-track,
+#logs .table-wrap::-webkit-scrollbar-track {
+    background: rgba(2, 6, 23, 0.45);
+    border-radius: 999px;
+}
+
+.table-wrap::-webkit-scrollbar-thumb,
+#logs .table-wrap::-webkit-scrollbar-thumb {
+    background: rgba(34, 211, 238, 0.45);
+    border-radius: 999px;
+}
+
+.table-wrap::-webkit-scrollbar-thumb:hover,
+#logs .table-wrap::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 197, 94, 0.65);
+}
+
+@media (max-width: 1280px) {
+    .hero {
+    position: relative;
+    min-height: 300px;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: 28px;
+    padding: 36px;
+    border: 1px solid rgba(34, 211, 238, 0.18);
+    border-radius: 34px;
+    background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(8, 13, 31, 0.68)),
+        radial-gradient(circle at 95% 15%, rgba(34, 211, 238, 0.24), transparent 20rem);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+    .hero h2 {
+    margin: 0;
+    max-width: none;
+    white-space: nowrap;
+    font-size: clamp(32px, 3.6vw, 54px);
+    letter-spacing: -0.065em;
+    line-height: 1.02;
+    text-shadow: 0 0 28px rgba(34, 211, 238, 0.10);
+}
+
+    .hero-orb {
+        display: none;
+    }
+}
+
+@media (max-width: 1100px) {
+    .sidebar {
+        position: static;
+        width: auto;
+        margin: 16px;
+    }
+
+    .main {
+        margin-left: 0;
+        padding: 0 16px 28px;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .camera-grid,
+    .two-column {
+        grid-template-columns: 1fr;
+    }
+
+    .hero {
+    position: relative;
+    min-height: 300px;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    gap: 28px;
+    padding: 36px;
+    border: 1px solid rgba(34, 211, 238, 0.18);
+    border-radius: 34px;
+    background:
+        linear-gradient(135deg, rgba(15, 23, 42, 0.92), rgba(8, 13, 31, 0.68)),
+        radial-gradient(circle at 95% 15%, rgba(34, 211, 238, 0.24), transparent 20rem);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+}
+
+@media (max-width: 640px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-grid,
+    .control-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #logs .table-wrap {
+        max-height: 360px;
+    }
+
+    .hero h2 {
+    margin: 0;
+    max-width: none;
+    white-space: nowrap;
+    font-size: clamp(32px, 3.6vw, 54px);
+    letter-spacing: -0.065em;
+    line-height: 1.02;
+    text-shadow: 0 0 28px rgba(34, 211, 238, 0.10);
+}
+}
+
+
+/* Upgraded manual control console */
+.control-panel {
+    min-height: 100%;
+}
+
+.control-panel::after {
+    content: "";
+    position: absolute;
+    right: -90px;
+    bottom: -110px;
+    width: 260px;
+    height: 260px;
+    border-radius: 999px;
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.18), transparent 68%);
+    pointer-events: none;
+}
+
+.badge.cyan {
+    background: rgba(34, 211, 238, 0.12);
+    color: #c8f7ff;
+    border: 1px solid rgba(34, 211, 238, 0.24);
+}
+
+.manual-dashboard {
+    display: grid;
+    gap: 16px;
+}
+
+.barrier-visual {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 18px;
+    align-items: center;
+    min-height: 172px;
+    padding: 18px;
+    border-radius: 24px;
+    background:
+        radial-gradient(circle at 25% 25%, rgba(34, 211, 238, 0.18), transparent 40%),
+        linear-gradient(135deg, rgba(2, 6, 23, 0.70), rgba(15, 23, 42, 0.54));
+    border: 1px solid rgba(34, 211, 238, 0.16);
+}
+
+.gate-scene {
+    position: relative;
+    height: 132px;
+    border-radius: 20px;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(15, 23, 42, 0.10), rgba(2, 6, 23, 0.75)),
+        radial-gradient(circle at center, rgba(34, 211, 238, 0.18), transparent 58%);
+    border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.gate-post {
+    position: absolute;
+    bottom: 24px;
+    width: 26px;
+    height: 74px;
+    border-radius: 10px 10px 5px 5px;
+    background: linear-gradient(180deg, #1e293b, #020617);
+    border: 1px solid rgba(34, 211, 238, 0.24);
+    box-shadow: 0 0 22px rgba(34, 211, 238, 0.14);
+}
+
+.gate-post::before {
+    content: "";
+    position: absolute;
+    top: 13px;
+    left: 9px;
+    width: 8px;
+    height: 34px;
+    border-radius: 999px;
+    background: #22d3ee;
+    box-shadow: 0 0 16px #22d3ee;
+}
+
+.left-post {
+    left: 28px;
+}
+
+.right-post {
+    right: 28px;
+}
+
+.gate-arm {
+    position: absolute;
+    left: 50px;
+    top: 45px;
+    width: 205px;
+    height: 18px;
+    border-radius: 999px;
+    transform: rotate(-13deg);
+    transform-origin: left center;
+    background:
+        repeating-linear-gradient(110deg, #e0f2fe 0 18px, #22d3ee 18px 34px),
+        linear-gradient(90deg, #f8fafc, #22d3ee);
+    border: 2px solid rgba(2, 6, 23, 0.8);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.22);
+}
+
+.gate-road {
+    position: absolute;
+    left: 50%;
+    bottom: -24px;
+    width: 158px;
+    height: 92px;
+    transform: translateX(-50%);
+    clip-path: polygon(38% 0, 62% 0, 100% 100%, 0 100%);
+    background: linear-gradient(180deg, #0f172a, #020617);
+    border-left: 2px solid rgba(255, 255, 255, 0.35);
+    border-right: 2px solid rgba(255, 255, 255, 0.35);
+}
+
+.gate-road span {
+    position: absolute;
+    left: 50%;
+    width: 7px;
+    height: 16px;
+    transform: translateX(-50%);
+    border-radius: 4px;
+    background: #22d3ee;
+}
+
+.gate-road span:nth-child(1) { top: 14px; }
+.gate-road span:nth-child(2) { top: 40px; }
+.gate-road span:nth-child(3) { top: 68px; }
+
+.barrier-copy strong {
+    display: block;
+    font-size: 20px;
+    letter-spacing: -0.03em;
+}
+
+.barrier-copy p {
+    margin: 8px 0 0;
+    color: var(--muted);
+    line-height: 1.65;
+}
+
+.command-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.command-grid .control-btn {
+    min-height: 84px;
+    display: grid;
+    place-items: center;
+    gap: 4px;
+    text-align: center;
+}
+
+.command-grid .control-btn span {
+    display: block;
+    font-size: 15px;
+}
+
+.command-grid .control-btn small {
+    display: block;
+    font-size: 12px;
+    opacity: 0.78;
+}
+
+.manual-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.manual-info-grid div {
+    padding: 14px;
+    border-radius: 18px;
+    background: rgba(2, 6, 23, 0.48);
+    border: 1px solid rgba(148, 163, 184, 0.14);
+}
+
+.manual-info-grid span {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 6px;
+}
+
+.manual-info-grid strong {
+    display: block;
+    color: var(--text);
+    font-size: 14px;
+}
+
+@media (max-width: 760px) {
+    .barrier-visual {
+        grid-template-columns: 1fr;
+    }
+
+    .command-grid,
+    .manual-info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Equal camera cards */
+.camera-grid {
+    align-items: stretch;
+}
+
+.camera-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.camera-frame {
+    flex: 0 0 auto;
+}
+
+.vehicle-detail {
+    flex: 1;
+}
+
+
+/* Hero orb brought back without logo */
+.hero-orb {
+    min-height: 230px;
+    display: grid;
+    place-items: center;
+    position: relative;
+}
+
+.core-orb {
+    width: 108px;
+    height: 108px;
+    border-radius: 999px;
+    background:
+        radial-gradient(circle at 35% 35%, rgba(34, 211, 238, 0.95), rgba(14, 165, 233, 0.45) 45%, rgba(2, 6, 23, 0.12) 70%),
+        radial-gradient(circle, rgba(34, 197, 94, 0.20), transparent 65%);
+    box-shadow:
+        0 0 0 14px rgba(34, 211, 238, 0.06),
+        0 0 38px rgba(34, 211, 238, 0.22),
+        0 0 90px rgba(34, 197, 94, 0.12);
+    position: relative;
+    z-index: 2;
+}
+
+.system-status {
+    position: absolute;
+    right: 6px;
+    bottom: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 11px 18px;
+    border-radius: 999px;
+    background: rgba(34, 197, 94, 0.12);
+    color: #bbf7d0;
+    border: 1px solid rgba(34, 197, 94, 0.24);
+    white-space: nowrap;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.22);
+    z-index: 3;
+}
+
+.global-sidebar-toggle {
+    position: fixed;
+    top: 18px;
+    left: 18px;
+    width: 48px;
+    height: 48px;
+    border: 1px solid rgba(34, 211, 238, 0.22);
+    border-radius: 16px;
+    background: rgba(8, 13, 31, 0.88);
+    color: #dff7ff;
+    font-size: 22px;
+    cursor: pointer;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.26);
+    z-index: 1200;
+    transition: 0.2s ease;
+}
+
+.global-sidebar-toggle:hover {
+    transform: translateY(-1px);
+    border-color: rgba(34, 211, 238, 0.45);
+}
+
+.sidebar {
+    transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+.main {
+    transition: margin-left 0.25s ease, padding-left 0.25s ease;
+}
+
+body.sidebar-collapsed .sidebar {
+    transform: translateX(-115%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+body.sidebar-collapsed .main {
+    margin-left: 0;
+    padding-left: 28px;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle {
+    left: 18px;
+}
+
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 252px;
+}
+
+@media (max-width: 1280px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero h2 {
+        white-space: normal;
+    }
+
+    .hero-orb {
+        display: none;
+    }
+
+    body:not(.sidebar-collapsed) .global-sidebar-toggle {
+        left: 18px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .global-sidebar-toggle {
+        display: none;
+    }
+}
+
+
+/* Scrollable small tables: Currently Inside and Temporary Visitors */
+#insideTable,
+#tempVisitorsTable {
+    width: 100%;
+}
+
+#insideTableWrap,
+#tempVisitorsWrap {
+    max-height: 286px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+/* Keep headers visible while scrolling */
+#insideTableWrap thead th,
+#tempVisitorsWrap thead th {
+    position: sticky;
+    top: 0;
+    background: #071126;
+    z-index: 2;
+}
+
+/* Match existing futuristic scrollbar */
+#insideTableWrap::-webkit-scrollbar,
+#tempVisitorsWrap::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+#insideTableWrap::-webkit-scrollbar-track,
+#tempVisitorsWrap::-webkit-scrollbar-track {
+    background: rgba(2, 6, 23, 0.45);
+    border-radius: 999px;
+}
+
+#insideTableWrap::-webkit-scrollbar-thumb,
+#tempVisitorsWrap::-webkit-scrollbar-thumb {
+    background: rgba(34, 211, 238, 0.45);
+    border-radius: 999px;
+}
+
+#insideTableWrap::-webkit-scrollbar-thumb:hover,
+#tempVisitorsWrap::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 197, 94, 0.65);
+}
+
+
+/* Requested polish: hero orb icon only, no System Online label */
+.hero-orb .system-status {
+    display: none !important;
+}
+
+.core-orb {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background:
+        radial-gradient(circle at 35% 35%, rgba(255, 255, 255, 0.96), rgba(226, 246, 255, 0.88) 48%, rgba(34, 211, 238, 0.14) 72%);
+}
+
+.orb-logo-icon {
+    width: 82%;
+    height: 82%;
+    object-fit: contain;
+    border-radius: 999px;
+    filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.28));
+}
+
+/* Keep each panel natural height so Add Temporary Visitor will not stretch with empty space */
+.two-column {
+    align-items: start;
+}
+
+/* Slightly compact the manual command console */
+.barrier-visual {
+    min-height: 130px;
+    padding: 14px;
+}
+
+.gate-scene {
+    height: 104px;
+}
+
+.gate-post {
+    bottom: 18px;
+    height: 62px;
+}
+
+.gate-arm {
+    top: 34px;
+    width: 190px;
+}
+
+.gate-road {
+    height: 72px;
+}
+
+.barrier-copy strong {
+    font-size: 18px;
+}
+
+.barrier-copy p {
+    line-height: 1.45;
+    font-size: 14px;
+}
+
+.command-grid .control-btn {
+    min-height: 72px;
+}
+
+.manual-info-grid div {
+    padding: 11px 13px;
+}
+
+
+/* Final targeted fixes */
+
+/* Sidebar toggle: make it an attached side tab instead of a weird square over the brand */
+.global-sidebar-toggle {
+    top: 34px;
+    left: 304px;
+    width: 34px;
+    height: 66px;
+    border-radius: 0 18px 18px 0;
+    font-size: 0;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.94), rgba(2, 6, 23, 0.88));
+    border-left: 0;
+    z-index: 1300;
+}
+
+.global-sidebar-toggle::before {
+    content: "‹";
+    font-size: 30px;
+    line-height: 1;
+    color: #dff7ff;
+    transform: translateY(-1px);
+}
+
+body.sidebar-collapsed .global-sidebar-toggle {
+    left: 18px;
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    border-left: 1px solid rgba(34, 211, 238, 0.22);
+}
+
+body.sidebar-collapsed .global-sidebar-toggle::before {
+    content: "☰";
+    font-size: 22px;
+}
+
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 304px;
+}
+
+/* Orb: no white background; transparent icon sits inside the glowing core */
+.core-orb {
+    width: 114px;
+    height: 114px;
+    display: grid;
+    place-items: center;
+    overflow: visible;
+    border: 1px solid rgba(34, 211, 238, 0.34);
+    background:
+        radial-gradient(circle at center, rgba(34, 211, 238, 0.28), rgba(15, 23, 42, 0.22) 52%, rgba(2, 6, 23, 0.02) 74%);
+    box-shadow:
+        0 0 0 14px rgba(34, 211, 238, 0.055),
+        0 0 44px rgba(34, 211, 238, 0.24),
+        0 0 90px rgba(34, 197, 94, 0.12);
+}
+
+.orb-logo-icon {
+    width: 92%;
+    height: 92%;
+    object-fit: contain;
+    border-radius: 0;
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.35));
+}
+
+/* Restore the nicer full manual barrier visual */
+.barrier-visual {
+    min-height: 172px;
+    padding: 18px;
+}
+
+.gate-scene {
+    height: 132px;
+}
+
+.gate-post {
+    bottom: 24px;
+    height: 74px;
+}
+
+.gate-arm {
+    top: 45px;
+    width: 205px;
+}
+
+.gate-road {
+    height: 92px;
+}
+
+.barrier-copy strong {
+    font-size: 20px;
+}
+
+.barrier-copy p {
+    line-height: 1.65;
+    font-size: 16px;
+}
+
+.command-grid .control-btn {
+    min-height: 84px;
+}
+
+.manual-info-grid div {
+    padding: 14px;
+}
+
+/* Keep Add Temporary Visitor natural height, but add clean spacing between sections */
+.two-column {
+    align-items: start;
+}
+
+.main > section {
+    margin-bottom: 24px;
+}
+
+.two-column + .panel,
+.panel + #logs,
+#logs {
+    margin-top: 24px;
+}
+
+@media (max-width: 1280px) {
+    body:not(.sidebar-collapsed) .global-sidebar-toggle {
+        left: 304px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .global-sidebar-toggle {
+        display: none;
+    }
+}
+
+
+/* Cleaner sidebar toggle: slim side tab, not a floating square */
+.global-sidebar-toggle {
+    position: fixed;
+    top: 50%;
+    left: 304px;
+    width: 34px;
+    height: 96px;
+    transform: translateY(-50%);
+    border: 1px solid rgba(34, 211, 238, 0.24);
+    border-left: 0;
+    border-radius: 0 18px 18px 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.96), rgba(2, 6, 23, 0.90));
+    color: #dff7ff;
+    cursor: pointer;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.28);
+    z-index: 1300;
+    font-size: 0;
+    display: grid;
+    place-items: center;
+    transition: 0.22s ease;
+}
+
+.global-sidebar-toggle::before {
+    content: "‹";
+    font-size: 34px;
+    font-weight: 800;
+    line-height: 1;
+    transform: translateY(-2px);
+    color: #dff7ff;
+}
+
+.global-sidebar-toggle:hover {
+    border-color: rgba(34, 211, 238, 0.50);
+    box-shadow: 0 0 28px rgba(34, 211, 238, 0.22);
+}
+
+body.sidebar-collapsed .global-sidebar-toggle {
+    left: 0;
+    width: 38px;
+    height: 104px;
+    border-radius: 0 18px 18px 0;
+    border-left: 0;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle::before {
+    content: "☰";
+    font-size: 22px;
+    transform: none;
+}
+
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 304px;
+}
+
+/* Manual panel after removing the info cards */
+.manual-dashboard {
+    gap: 16px;
+}
+
+.control-panel {
+    padding-bottom: 20px;
+}
+
+@media (max-width: 1280px) {
+    body:not(.sidebar-collapsed) .global-sidebar-toggle {
+        left: 304px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .global-sidebar-toggle {
+        display: none;
+    }
+}
+
+
+/* Final simple sidebar tab */
+.global-sidebar-toggle {
+    position: fixed;
+    top: 50%;
+    left: 304px;
+    width: 38px;
+    height: 90px;
+    transform: translateY(-50%);
+    border: 1px solid rgba(255, 255, 255, 0.88);
+    border-left: 1px solid rgba(255, 255, 255, 0.88);
+    border-radius: 0 22px 22px 0;
+    background: rgba(2, 6, 23, 0.82);
+    color: #dff7ff;
+    cursor: pointer;
+    backdrop-filter: blur(14px);
+    box-shadow: none;
+    z-index: 1300;
+    font-size: 0;
+    display: grid;
+    place-items: center;
+    transition: none !important;
+}
+
+.global-sidebar-toggle::before {
+    content: "‹";
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1;
+    color: #dff7ff;
+    transform: translateY(-2px);
+}
+
+.global-sidebar-toggle:hover {
+    border-color: #ffffff;
+    box-shadow: 0 0 18px rgba(34, 211, 238, 0.16);
+}
+
+body.sidebar-collapsed .global-sidebar-toggle {
+    left: 0;
+    width: 38px;
+    height: 90px;
+    border-radius: 0 22px 22px 0;
+    border-left: 0;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle::before {
+    content: "›";
+    font-size: 42px;
+}
+
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 304px;
+}
+
+.sidebar,
+.main {
+    transition: none !important;
+}
+
+@media (max-width: 1280px) {
+    body:not(.sidebar-collapsed) .global-sidebar-toggle {
+        left: 304px;
+    }
+}
+
+@media (max-width: 1100px) {
+    .global-sidebar-toggle {
+        display: none;
+    }
+}
+
+
+/* Organized management layout */
+.full-width-panel {
+    margin-bottom: 24px;
+}
+
+.management-row {
+    margin-bottom: 24px;
+}
+
+.management-row .panel {
+    height: fit-content;
+}
+
+/* Manual barrier console now owns the whole row */
+.full-width-panel .manual-dashboard {
+    max-width: none;
+}
+
+.full-width-panel .barrier-visual {
+    grid-template-columns: minmax(380px, 0.9fr) minmax(320px, 1fr);
+}
+
+.full-width-panel .gate-scene {
+    min-height: 150px;
+}
+
+/* Prevent rows from sticking together */
+.camera-grid {
+    margin-bottom: 24px;
+}
+
+#logs {
+    margin-top: 0;
+}
+
+/* Make the temporary and inside tables stable at around 5 rows */
+#insideTableWrap,
+#tempVisitorsWrap {
+    max-height: 305px;
+}
+
+/* Keep layout clean when sidebar is hidden */
+body.sidebar-collapsed .full-width-panel .barrier-visual {
+    grid-template-columns: minmax(420px, 0.9fr) minmax(340px, 1fr);
+}
+
+@media (max-width: 900px) {
+    .full-width-panel .barrier-visual,
+    body.sidebar-collapsed .full-width-panel .barrier-visual {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Final alignment fixes requested */
+
+/* Sidebar toggle: no animation, no sliding effect, just a simple static side tab */
+.global-sidebar-toggle,
+.global-sidebar-toggle:hover,
+.global-sidebar-toggle:active {
+    transition: none !important;
+    transform: translateY(-50%) !important;
+    animation: none !important;
+}
+
+.sidebar,
+.main {
+    transition: none !important;
+    animation: none !important;
+}
+
+/* Use a clean single-arrow tab. It instantly changes position when sidebar is hidden/shown. */
+.global-sidebar-toggle {
+    position: fixed;
+    top: 50%;
+    left: 304px;
+    width: 36px;
+    height: 92px;
+    border: 1px solid rgba(255, 255, 255, 0.88);
+    border-left: 0;
+    border-radius: 0 22px 22px 0;
+    background: rgba(2, 6, 23, 0.86);
+    color: #dff7ff;
+    cursor: pointer;
+    backdrop-filter: blur(14px);
+    box-shadow: none;
+    z-index: 1300;
+    font-size: 0;
+    display: grid;
+    place-items: center;
+}
+
+.global-sidebar-toggle::before {
+    content: "‹";
+    font-size: 42px;
+    font-weight: 900;
+    line-height: 1;
+    color: #dff7ff;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle {
+    left: 0;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle::before {
+    content: "›";
+    font-size: 42px;
+}
+
+/* Make paired cards line up cleanly */
+.management-row {
+    align-items: stretch;
+    gap: 24px;
+}
+
+.management-row > .panel {
+    height: 100%;
+    min-height: 0;
+}
+
+.management-row .form-grid {
+    align-content: start;
+}
+
+/* Make Add Registered Vehicle and Add Temporary Visitor visually equal */
+.management-row .panel#vehicles,
+.management-row .panel#temporary {
+    min-height: 330px;
+}
+
+/* Fixed monitoring height so containers do not grow when rows increase */
+.monitor-panel {
+    min-height: 272px;
+    max-height: 272px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.monitor-panel .panel-header {
+    flex: 0 0 auto;
+}
+
+.monitor-panel .table-wrap {
+    flex: 1 1 auto;
+    height: 178px;
+    max-height: 178px;
+    overflow-y: auto;
+    overflow-x: auto;
+    border-radius: 18px;
+    border: 1px solid rgba(148, 163, 184, 0.16);
+}
+
+/* Stable scrollable tables for Currently Inside and Temporary Visitors */
+#insideTableWrap,
+#tempVisitorsWrap {
+    height: 178px !important;
+    max-height: 178px !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+}
+
+#insideTableWrap thead th,
+#tempVisitorsWrap thead th {
+    position: sticky;
+    top: 0;
+    background: #071126;
+    z-index: 3;
+}
+
+/* Fix the manual barrier visual so the boom is not stuck at the top */
+.full-width-panel .barrier-visual {
+    grid-template-columns: minmax(390px, 0.95fr) minmax(320px, 1fr);
+    align-items: center;
+}
+
+.full-width-panel .gate-scene {
+    min-height: 160px;
+    height: 160px;
+}
+
+.full-width-panel .gate-arm {
+    top: 58px;
+    left: 70px;
+    width: 235px;
+    transform: rotate(-11deg);
+}
+
+.full-width-panel .gate-post {
+    bottom: 32px;
+}
+
+.full-width-panel .gate-road {
+    bottom: -20px;
+}
+
+/* Keep good spacing between main sections */
+.full-width-panel,
+.management-row,
+.camera-grid,
+.stats-grid {
+    margin-bottom: 24px;
+}
+
+#logs {
+    margin-top: 0;
+}
+
+/* Responsive fallback */
+@media (max-width: 900px) {
+    .management-row {
+        align-items: start;
+    }
+
+    .management-row .panel#vehicles,
+    .management-row .panel#temporary,
+    .monitor-panel {
+        min-height: auto;
+        max-height: none;
+    }
+
+    .monitor-panel .table-wrap,
+    #insideTableWrap,
+    #tempVisitorsWrap {
+        height: auto !important;
+        max-height: 260px !important;
+    }
+
+    .full-width-panel .barrier-visual {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 1100px) {
+    .global-sidebar-toggle {
+        display: none;
+    }
+}
+
+
+/* Maangas command center visual for Manual Barrier Control */
+.command-center-visual {
+    min-height: 230px !important;
+    padding: 22px !important;
+    display: grid !important;
+    grid-template-columns: minmax(420px, 0.95fr) minmax(360px, 1fr) !important;
+    gap: 24px !important;
+    align-items: center !important;
+    background:
+        radial-gradient(circle at 18% 18%, rgba(34, 211, 238, 0.22), transparent 34%),
+        radial-gradient(circle at 78% 88%, rgba(34, 197, 94, 0.14), transparent 34%),
+        linear-gradient(135deg, rgba(2, 6, 23, 0.78), rgba(15, 23, 42, 0.48)) !important;
+    border: 1px solid rgba(34, 211, 238, 0.18) !important;
+    overflow: hidden;
+}
+
+.access-holo {
+    min-height: 176px;
+    display: grid;
+    place-items: center;
+}
+
+.holo-panel {
+    position: relative;
+    width: min(100%, 520px);
+    height: 176px;
+    border-radius: 26px;
+    background:
+        linear-gradient(135deg, rgba(2, 6, 23, 0.92), rgba(8, 47, 73, 0.34)),
+        radial-gradient(circle at center, rgba(34, 211, 238, 0.20), transparent 58%);
+    border: 1px solid rgba(34, 211, 238, 0.26);
+    box-shadow:
+        inset 0 0 38px rgba(34, 211, 238, 0.07),
+        0 0 36px rgba(34, 211, 238, 0.10);
+    overflow: hidden;
+}
+
+.holo-panel::before {
+    content: "";
+    position: absolute;
+    inset: 16px 24px;
+    border-radius: 20px;
+    border: 1px solid rgba(34, 211, 238, 0.12);
+    background:
+        linear-gradient(90deg, transparent 0 49%, rgba(34, 211, 238, 0.16) 50%, transparent 51%),
+        linear-gradient(0deg, transparent 0 49%, rgba(34, 211, 238, 0.10) 50%, transparent 51%);
+    background-size: 44px 44px;
+    opacity: 0.7;
+}
+
+.holo-corner {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    border-color: #22d3ee;
+    filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.9));
+    z-index: 2;
+}
+
+.corner-a {
+    top: 18px;
+    left: 18px;
+    border-top: 3px solid;
+    border-left: 3px solid;
+    border-radius: 12px 0 0 0;
+}
+
+.corner-b {
+    top: 18px;
+    right: 18px;
+    border-top: 3px solid;
+    border-right: 3px solid;
+    border-radius: 0 12px 0 0;
+}
+
+.corner-c {
+    bottom: 18px;
+    left: 18px;
+    border-bottom: 3px solid;
+    border-left: 3px solid;
+    border-radius: 0 0 0 12px;
+}
+
+.corner-d {
+    bottom: 18px;
+    right: 18px;
+    border-bottom: 3px solid;
+    border-right: 3px solid;
+    border-radius: 0 0 12px 0;
+}
+
+.access-core {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    z-index: 3;
+}
+
+.core-ring {
+    position: absolute;
+    border-radius: 999px;
+    border: 1px solid rgba(34, 211, 238, 0.38);
+    box-shadow: 0 0 24px rgba(34, 211, 238, 0.18);
+}
+
+.ring-alpha {
+    width: 116px;
+    height: 116px;
+}
+
+.ring-beta {
+    width: 82px;
+    height: 82px;
+    border-color: rgba(34, 197, 94, 0.34);
+}
+
+.core-mark {
+    width: 62px;
+    height: 62px;
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
+    font-weight: 950;
+    font-size: 20px;
+    letter-spacing: -0.04em;
+    color: #06111f;
+    background: linear-gradient(135deg, #22d3ee, #22c55e);
+    box-shadow: 0 0 26px rgba(34, 211, 238, 0.35);
+}
+
+.scan-lane {
+    position: absolute;
+    left: 50%;
+    bottom: -14px;
+    width: 168px;
+    height: 90px;
+    transform: translateX(-50%);
+    clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.92), rgba(2, 6, 23, 0.98));
+    border-left: 2px solid rgba(34, 211, 238, 0.36);
+    border-right: 2px solid rgba(34, 211, 238, 0.36);
+    z-index: 1;
+}
+
+.scan-lane span {
+    position: absolute;
+    left: 50%;
+    width: 8px;
+    height: 14px;
+    border-radius: 999px;
+    transform: translateX(-50%);
+    background: #22d3ee;
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.6);
+}
+
+.scan-lane span:nth-child(1) { top: 8px; }
+.scan-lane span:nth-child(2) { top: 30px; }
+.scan-lane span:nth-child(3) { top: 52px; }
+.scan-lane span:nth-child(4) { top: 74px; }
+
+.plate-chip,
+.secure-chip {
+    position: absolute;
+    z-index: 4;
+    padding: 7px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: 0.08em;
+    color: #c8f7ff;
+    background: rgba(8, 13, 31, 0.78);
+    border: 1px solid rgba(34, 211, 238, 0.24);
+}
+
+.plate-chip {
+    left: 34px;
+    bottom: 28px;
+}
+
+.secure-chip {
+    right: 34px;
+    top: 28px;
+}
+
+.command-copy {
+    position: relative;
+    z-index: 4;
+}
+
+.command-copy .mini-eyebrow {
+    margin: 0 0 8px;
+    color: #22d3ee;
+    font-size: 12px;
+    font-weight: 950;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+}
+
+.command-copy h4 {
+    margin: 0;
+    font-size: clamp(24px, 2.2vw, 36px);
+    letter-spacing: -0.05em;
+}
+
+.command-copy p {
+    max-width: 620px;
+    margin: 10px 0 0;
+    color: var(--muted);
+    line-height: 1.65;
+}
+
+.command-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.command-metrics div {
+    padding: 13px 14px;
+    border-radius: 18px;
+    background: rgba(2, 6, 23, 0.54);
+    border: 1px solid rgba(34, 211, 238, 0.14);
+}
+
+.command-metrics span {
+    display: block;
+    color: var(--muted);
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.command-metrics strong {
+    display: block;
+    color: var(--text);
+    font-size: 13px;
+}
+
+@media (max-width: 900px) {
+    .command-center-visual {
+        grid-template-columns: 1fr !important;
+    }
+
+    .command-metrics {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/* Simple Manual Barrier Control: buttons only */
+.control-panel {
+    min-height: auto !important;
+    padding-bottom: 22px !important;
+}
+
+.control-panel .panel-header {
+    margin-bottom: 18px !important;
+}
+
+.control-panel .manual-dashboard {
+    display: block !important;
+}
+
+.control-panel .barrier-visual,
+.control-panel .command-center-visual,
+.control-panel .access-holo,
+.control-panel .command-copy,
+.control-panel .barrier-copy,
+.control-panel .manual-info-grid {
+    display: none !important;
+}
+
+.control-panel .control-grid,
+.control-panel .command-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(180px, 1fr)) !important;
+    gap: 16px !important;
+}
+
+.control-panel .control-btn {
+    min-height: 82px !important;
+    border-radius: 20px !important;
+    font-size: 15px !important;
+}
+
+.control-panel .control-btn span {
+    font-size: 16px !important;
+}
+
+.control-panel .control-btn small {
+    font-size: 12px !important;
+    opacity: 0.78;
+}
+
+@media (max-width: 760px) {
+    .control-panel .control-grid,
+    .control-panel .command-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+
+/* FINAL sidebar toggle fix: smaller, no white highlight */
+.global-sidebar-toggle,
+.global-sidebar-toggle:hover,
+.global-sidebar-toggle:focus,
+.global-sidebar-toggle:active {
+    position: fixed !important;
+    top: 50% !important;
+    left: 304px !important;
+    width: 22px !important;
+    height: 58px !important;
+    transform: translateY(-50%) !important;
+    border: 1px solid rgba(34, 211, 238, 0.38) !important;
+    border-left: 0 !important;
+    border-radius: 0 13px 13px 0 !important;
+    background: rgba(2, 6, 23, 0.88) !important;
+    color: #22d3ee !important;
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.08) !important;
+    outline: none !important;
+    cursor: pointer !important;
+    backdrop-filter: blur(12px) !important;
+    z-index: 1300 !important;
+    font-size: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    transition: none !important;
+    animation: none !important;
+}
+
+.global-sidebar-toggle::before {
+    content: "‹" !important;
+    font-size: 26px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    color: #22d3ee !important;
+    text-shadow: 0 0 8px rgba(34, 211, 238, 0.35) !important;
+    transform: translateY(-1px) !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle,
+body.sidebar-collapsed .global-sidebar-toggle:hover,
+body.sidebar-collapsed .global-sidebar-toggle:focus,
+body.sidebar-collapsed .global-sidebar-toggle:active {
+    left: 0 !important;
+    width: 22px !important;
+    height: 58px !important;
+    border-left: 0 !important;
+    border-color: rgba(34, 211, 238, 0.38) !important;
+    background: rgba(2, 6, 23, 0.88) !important;
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.08) !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle::before {
+    content: "›" !important;
+    font-size: 26px !important;
+}
+
+/* Remove old white hover/highlight from previous toggle versions */
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 304px !important;
+}
+
+.sidebar,
+.main {
+    transition: none !important;
+}
+
+
+/* Larger sidebar logo for better visibility */
+.brand {
+    gap: 16px !important;
+    margin-bottom: 36px !important;
+}
+
+.brand-logo-wrap {
+    width: 82px !important;
+    height: 82px !important;
+    border-radius: 24px !important;
+    background: radial-gradient(circle at 30% 20%, rgba(34, 211, 238, 0.30), rgba(15, 23, 42, 0.70)) !important;
+    border: 1px solid rgba(34, 211, 238, 0.34) !important;
+    box-shadow: 0 0 26px rgba(34, 211, 238, 0.20) !important;
+    flex: 0 0 82px !important;
+}
+
+.brand-logo {
+    width: 72px !important;
+    height: 72px !important;
+    border-radius: 20px !important;
+    object-fit: contain !important;
+    background: white !important;
+    padding: 4px !important;
+}
+
+.brand h1 {
+    font-size: 24px !important;
+    line-height: 1.05 !important;
+}
+
+.brand p {
+    font-size: 14px !important;
+    line-height: 1.25 !important;
+}
+
+.sidebar {
+    padding-top: 22px !important;
+}
+
+
+/* 2-servo manual controls */
+.four-command-grid {
+    grid-template-columns: repeat(4, minmax(160px, 1fr)) !important;
+    gap: 16px !important;
+}
+
+.four-command-grid .control-btn {
+    min-height: 78px !important;
+    border-radius: 20px !important;
+}
+
+.four-command-grid .control-btn span {
+    display: block;
+    font-size: 16px;
+    font-weight: 950;
+}
+
+.four-command-grid .control-btn small {
+    display: block;
+    margin-top: 5px;
+    font-size: 12px;
+    opacity: 0.82;
+}
+
+.control-btn.close {
+    background: linear-gradient(135deg, #fb923c, #ef4444) !important;
+    color: white !important;
+}
+
+@media (max-width: 1100px) {
+    .four-command-grid {
+        grid-template-columns: repeat(2, minmax(160px, 1fr)) !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .four-command-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+
+/* Soft-separated 2-servo manual control layout */
+.barrier-soft-split {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) 1px minmax(0, 1fr) !important;
+    gap: 22px !important;
+    align-items: stretch !important;
+    margin-top: 6px;
+}
+
+.barrier-soft-divider {
+    width: 1px;
+    min-height: 100%;
+    background: linear-gradient(
+        180deg,
+        rgba(34, 211, 238, 0.04) 0%,
+        rgba(34, 211, 238, 0.18) 20%,
+        rgba(34, 211, 238, 0.28) 50%,
+        rgba(34, 211, 238, 0.18) 80%,
+        rgba(34, 211, 238, 0.04) 100%
+    );
+    border-radius: 999px;
+}
+
+.barrier-soft-card {
+    padding: 18px 18px 16px;
+    border-radius: 24px;
+    background:
+        linear-gradient(180deg, rgba(6, 18, 42, 0.72), rgba(4, 14, 36, 0.88)),
+        radial-gradient(circle at top left, rgba(34, 211, 238, 0.08), transparent 45%);
+    border: 1px solid rgba(34, 211, 238, 0.12);
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.02),
+        0 10px 30px rgba(0,0,0,0.12);
+}
+
+.barrier-soft-head {
+    margin-bottom: 16px;
+}
+
+.barrier-soft-eyebrow {
+    margin: 0 0 6px;
+    color: var(--cyan);
+    font-size: 12px;
+    font-weight: 900;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.barrier-soft-head h4 {
+    margin: 0;
+    color: var(--text);
+    font-size: 24px;
+    letter-spacing: -0.03em;
+}
+
+.barrier-soft-hint {
+    display: inline-block;
+    margin-top: 6px;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.barrier-soft-buttons {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+}
+
+.barrier-soft-buttons .control-btn {
+    width: 100% !important;
+    min-height: 86px !important;
+    border-radius: 22px !important;
+}
+
+.barrier-soft-buttons .control-btn span {
+    display: block;
+    font-size: 16px;
+    font-weight: 950;
+}
+
+.barrier-soft-buttons .control-btn small {
+    display: block;
+    margin-top: 6px;
+    font-size: 12px;
+    opacity: 0.84;
+}
+
+.barrier-soft-buttons .control-btn.close {
+    background: linear-gradient(135deg, #fb923c, #ef4444) !important;
+    color: white !important;
+}
+
+@media (max-width: 980px) {
+    .barrier-soft-split {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+
+    .barrier-soft-divider {
+        display: none !important;
+    }
+}
+
+
+
+/* =========================================================
+   FINAL FORCE FIX: Manual Barrier Control soft split
+   Works even if dashboard.html is still the old 4-button version.
+   Left side = Entry Boom Barrier
+   Right side = Exit Boom Barrier
+   ========================================================= */
+
+.control-panel .control-grid,
+.control-panel .command-grid,
+.control-panel .four-command-grid {
+    position: relative !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(260px, 1fr)) !important;
+    grid-template-areas:
+        "entryLabel exitLabel"
+        "openEntry openExit"
+        "closeEntry closeExit" !important;
+    gap: 14px 22px !important;
+    padding: 18px !important;
+    border-radius: 26px !important;
+    background:
+        linear-gradient(90deg,
+            rgba(34, 211, 238, 0.10) 0%,
+            rgba(34, 211, 238, 0.04) 48%,
+            rgba(34, 211, 238, 0.20) 50%,
+            rgba(34, 211, 238, 0.04) 52%,
+            rgba(34, 197, 94, 0.10) 100%),
+        rgba(2, 6, 23, 0.24) !important;
+    border: 1px solid rgba(34, 211, 238, 0.14) !important;
+    overflow: hidden !important;
+}
+
+/* Soft section labels generated by CSS */
+.control-panel .control-grid::before,
+.control-panel .command-grid::before,
+.control-panel .four-command-grid::before {
+    content: "ENTRANCE LANE\A Entry Boom Barrier";
+    grid-area: entryLabel;
+    white-space: pre-line;
+    padding: 14px 16px;
+    border-radius: 20px;
+    background: rgba(2, 6, 23, 0.42);
+    border: 1px solid rgba(34, 211, 238, 0.13);
+    color: var(--text);
+    font-size: 22px;
+    font-weight: 950;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+}
+
+.control-panel .control-grid::after,
+.control-panel .command-grid::after,
+.control-panel .four-command-grid::after {
+    content: "EXIT LANE\A Exit Boom Barrier";
+    grid-area: exitLabel;
+    white-space: pre-line;
+    padding: 14px 16px;
+    border-radius: 20px;
+    background: rgba(2, 6, 23, 0.42);
+    border: 1px solid rgba(34, 211, 238, 0.13);
+    color: var(--text);
+    font-size: 22px;
+    font-weight: 950;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+}
+
+/* Make first line of generated labels feel like eyebrow through subtle text shadow/color balance */
+.control-panel .control-grid::before,
+.control-panel .control-grid::after,
+.control-panel .command-grid::before,
+.control-panel .command-grid::after,
+.control-panel .four-command-grid::before,
+.control-panel .four-command-grid::after {
+    text-shadow: 0 -19px 0 var(--cyan);
+}
+
+/* Reposition current existing buttons:
+   current DOM order = Open Entry, Close Entry, Open Exit, Close Exit */
+.control-panel .control-grid .control-btn:nth-child(1),
+.control-panel .command-grid .control-btn:nth-child(1),
+.control-panel .four-command-grid .control-btn:nth-child(1) {
+    grid-area: openEntry !important;
+}
+
+.control-panel .control-grid .control-btn:nth-child(2),
+.control-panel .command-grid .control-btn:nth-child(2),
+.control-panel .four-command-grid .control-btn:nth-child(2) {
+    grid-area: closeEntry !important;
+}
+
+.control-panel .control-grid .control-btn:nth-child(3),
+.control-panel .command-grid .control-btn:nth-child(3),
+.control-panel .four-command-grid .control-btn:nth-child(3) {
+    grid-area: openExit !important;
+}
+
+.control-panel .control-grid .control-btn:nth-child(4),
+.control-panel .command-grid .control-btn:nth-child(4),
+.control-panel .four-command-grid .control-btn:nth-child(4) {
+    grid-area: closeExit !important;
+}
+
+.control-panel .control-btn {
+    width: 100% !important;
+    min-height: 78px !important;
+    border-radius: 20px !important;
+}
+
+.control-panel .control-btn span {
+    display: block !important;
+    font-size: 16px !important;
+    font-weight: 950 !important;
+}
+
+.control-panel .control-btn small {
+    display: block !important;
+    margin-top: 5px !important;
+    font-size: 12px !important;
+    opacity: 0.84 !important;
+}
+
+/* Orange/red for close buttons */
+.control-panel .control-btn:nth-child(2),
+.control-panel .control-btn:nth-child(4) {
+    background: linear-gradient(135deg, #fb923c, #ef4444) !important;
+    color: white !important;
+}
+
+/* Hide old/unused manual visual/info blocks if any are still around */
+.control-panel .barrier-visual,
+.control-panel .command-center-visual,
+.control-panel .manual-info-grid,
+.control-panel .barrier-copy,
+.control-panel .command-copy,
+.control-panel .access-holo {
+    display: none !important;
+}
+
+/* Keep only the clean button console */
+.control-panel {
+    min-height: auto !important;
+}
+
+.control-panel .manual-dashboard {
+    display: block !important;
+}
+
+/* Sidebar toggle remains small and cyan */
+.global-sidebar-toggle,
+.global-sidebar-toggle:hover,
+.global-sidebar-toggle:focus,
+.global-sidebar-toggle:active {
+    position: fixed !important;
+    top: 50% !important;
+    left: 304px !important;
+    width: 22px !important;
+    height: 58px !important;
+    transform: translateY(-50%) !important;
+    border: 1px solid rgba(34, 211, 238, 0.38) !important;
+    border-left: 0 !important;
+    border-radius: 0 13px 13px 0 !important;
+    background: rgba(2, 6, 23, 0.88) !important;
+    color: #22d3ee !important;
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.08) !important;
+    outline: none !important;
+    cursor: pointer !important;
+    backdrop-filter: blur(12px) !important;
+    z-index: 1300 !important;
+    font-size: 0 !important;
+    display: grid !important;
+    place-items: center !important;
+    transition: none !important;
+    animation: none !important;
+}
+
+.global-sidebar-toggle::before {
+    content: "‹" !important;
+    font-size: 26px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    color: #22d3ee !important;
+    text-shadow: 0 0 8px rgba(34, 211, 238, 0.35) !important;
+    transform: translateY(-1px) !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle,
+body.sidebar-collapsed .global-sidebar-toggle:hover,
+body.sidebar-collapsed .global-sidebar-toggle:focus,
+body.sidebar-collapsed .global-sidebar-toggle:active {
+    left: 0 !important;
+    width: 22px !important;
+    height: 58px !important;
+    border-left: 0 !important;
+    border-color: rgba(34, 211, 238, 0.38) !important;
+    background: rgba(2, 6, 23, 0.88) !important;
+    box-shadow: 0 0 10px rgba(34, 211, 238, 0.08) !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle::before {
+    content: "›" !important;
+    font-size: 26px !important;
+}
+
+@media (max-width: 760px) {
+    .control-panel .control-grid,
+    .control-panel .command-grid,
+    .control-panel .four-command-grid {
+        grid-template-columns: 1fr !important;
+        grid-template-areas:
+            "entryLabel"
+            "openEntry"
+            "closeEntry"
+            "exitLabel"
+            "openExit"
+            "closeExit" !important;
+    }
+}
+
+
+/* CLEAN FIX for Manual Barrier labels: no duplicated/overlapping text */
+.control-panel .control-grid,
+.control-panel .command-grid,
+.control-panel .four-command-grid {
+    grid-template-columns: repeat(2, minmax(260px, 1fr)) !important;
+    grid-template-areas:
+        "entryLabel exitLabel"
+        "openEntry openExit"
+        "closeEntry closeExit" !important;
+    gap: 14px 22px !important;
+    padding: 18px !important;
+}
+
+/* Override the previous overlapping generated labels */
+.control-panel .control-grid::before,
+.control-panel .command-grid::before,
+.control-panel .four-command-grid::before {
+    content: "ENTRY BARRIER" !important;
+    grid-area: entryLabel !important;
+    white-space: normal !important;
+    display: flex !important;
+    align-items: center !important;
+    min-height: 56px !important;
+    padding: 0 18px !important;
+    border-radius: 18px !important;
+    background: rgba(2, 6, 23, 0.48) !important;
+    border: 1px solid rgba(34, 211, 238, 0.16) !important;
+    color: #22d3ee !important;
+    font-size: 15px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.14em !important;
+    line-height: 1.2 !important;
+    text-transform: uppercase !important;
+    text-shadow: none !important;
+}
+
+.control-panel .control-grid::after,
+.control-panel .command-grid::after,
+.control-panel .four-command-grid::after {
+    content: "EXIT BARRIER" !important;
+    grid-area: exitLabel !important;
+    white-space: normal !important;
+    display: flex !important;
+    align-items: center !important;
+    min-height: 56px !important;
+    padding: 0 18px !important;
+    border-radius: 18px !important;
+    background: rgba(2, 6, 23, 0.48) !important;
+    border: 1px solid rgba(34, 211, 238, 0.16) !important;
+    color: #22d3ee !important;
+    font-size: 15px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.14em !important;
+    line-height: 1.2 !important;
+    text-transform: uppercase !important;
+    text-shadow: none !important;
+}
+
+/* Make the buttons compact and aligned */
+.control-panel .control-btn {
+    min-height: 76px !important;
+}
+
+@media (max-width: 760px) {
+    .control-panel .control-grid,
+    .control-panel .command-grid,
+    .control-panel .four-command-grid {
+        grid-template-columns: 1fr !important;
+        grid-template-areas:
+            "entryLabel"
+            "openEntry"
+            "closeEntry"
+            "exitLabel"
+            "openExit"
+            "closeExit" !important;
+    }
+}
+
+
+/* Hide the 2-Servo Mode badge in Manual Barrier Control */
+#manual .badge.cyan {
+    display: none !important;
+}
+
+
+/* ==== Manual barrier final polish ==== */
+/* Bigger, centered top labels */
+.control-panel .control-grid::before,
+.control-panel .command-grid::before,
+.control-panel .four-command-grid::before,
+#manual .control-grid::before,
+#manual .command-grid::before,
+#manual .four-command-grid::before {
+    font-size: 18px !important;
+    min-height: 62px !important;
+    justify-content: center !important;
+    text-align: center !important;
+    letter-spacing: 0.16em !important;
+    padding: 0 16px !important;
+}
+
+.control-panel .control-grid::after,
+.control-panel .command-grid::after,
+.control-panel .four-command-grid::after,
+#manual .control-grid::after,
+#manual .command-grid::after,
+#manual .four-command-grid::after {
+    font-size: 18px !important;
+    min-height: 62px !important;
+    justify-content: center !important;
+    text-align: center !important;
+    letter-spacing: 0.16em !important;
+    padding: 0 16px !important;
+}
+
+/* Remove redundant small text under the buttons */
+.control-panel .control-btn small,
+#manual .control-btn small {
+    display: none !important;
+}
+
+/* Slightly rebalance button text after removing subtitle */
+.control-panel .control-btn,
+#manual .control-btn {
+    min-height: 72px !important;
+}
+
+.control-panel .control-btn span,
+#manual .control-btn span {
+    margin-top: 0 !important;
+    font-size: 17px !important;
+}
+
+
+/* =========================================================
+   SIDEBAR ACTIVE FIX
+   Fixes issue where Overview stays highlighted after clicking
+   Live Cameras / Manual Control / Temporary Access / Vehicles / Gate Logs.
+   ========================================================= */
+
+/* When any section hash is active, remove the default Overview active look first */
+body:has(main section:target) nav a.active {
+    color: var(--muted) !important;
+    background: transparent !important;
+    border-color: transparent !important;
+    box-shadow: none !important;
+}
+
+/* Highlight only the actual clicked / targeted section */
+body:has(#overview:target) nav a[href="#overview"],
+body:has(#cameras:target) nav a[href="#cameras"],
+body:has(#manual:target) nav a[href="#manual"],
+body:has(#temporary:target) nav a[href="#temporary"],
+body:has(#vehicles:target) nav a[href="#vehicles"],
+body:has(#logs:target) nav a[href="#logs"] {
+    color: var(--text) !important;
+    background: rgba(34, 211, 238, 0.10) !important;
+    border-color: rgba(34, 211, 238, 0.18) !important;
+    box-shadow: inset 0 0 18px rgba(34, 211, 238, 0.055) !important;
+}
+
+/* Remove persistent browser focus style after clicking nav links */
+nav a:focus,
+nav a:focus-visible {
+    outline: none !important;
+}
+
+
+/* =========================================================
+   Currently Inside + Temporary Visitors height fix
+   Shows around 5 rows before the table becomes scrollable.
+   ========================================================= */
+
+.panel:has(#insideTableWrap),
+.panel:has(#tempVisitorsWrap),
+.monitor-panel {
+    min-height: 430px !important;
+    max-height: 430px !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.panel:has(#insideTableWrap) .panel-header,
+.panel:has(#tempVisitorsWrap) .panel-header,
+.monitor-panel .panel-header {
+    flex: 0 0 auto !important;
+}
+
+#insideTableWrap,
+#tempVisitorsWrap,
+.panel:has(#insideTableWrap) .table-wrap,
+.panel:has(#tempVisitorsWrap) .table-wrap {
+    height: 315px !important;
+    min-height: 315px !important;
+    max-height: 315px !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+    border-radius: 18px !important;
+    border: 1px solid rgba(148, 163, 184, 0.16) !important;
+}
+
+#insideTableWrap table,
+#tempVisitorsWrap table {
+    min-width: 720px !important;
+}
+
+#insideTableWrap th,
+#insideTableWrap td,
+#tempVisitorsWrap th,
+#tempVisitorsWrap td {
+    padding-top: 13px !important;
+    padding-bottom: 13px !important;
+}
+
+#insideTableWrap thead th,
+#tempVisitorsWrap thead th {
+    position: sticky !important;
+    top: 0 !important;
+    background: #071126 !important;
+    z-index: 5 !important;
+}
+
+/* Make both monitoring cards stay aligned in the same row */
+.management-row:has(#insideTableWrap),
+.management-row:has(#tempVisitorsWrap) {
+    align-items: stretch !important;
+}
+
+/* Scrollbar remains clean but visible */
+#insideTableWrap::-webkit-scrollbar,
+#tempVisitorsWrap::-webkit-scrollbar {
+    width: 10px !important;
+    height: 10px !important;
+}
+
+#insideTableWrap::-webkit-scrollbar-track,
+#tempVisitorsWrap::-webkit-scrollbar-track {
+    background: rgba(2, 6, 23, 0.45) !important;
+    border-radius: 999px !important;
+}
+
+#insideTableWrap::-webkit-scrollbar-thumb,
+#tempVisitorsWrap::-webkit-scrollbar-thumb {
+    background: rgba(34, 211, 238, 0.45) !important;
+    border-radius: 999px !important;
+}
+
+@media (max-width: 900px) {
+    .panel:has(#insideTableWrap),
+    .panel:has(#tempVisitorsWrap),
+    .monitor-panel {
+        min-height: auto !important;
+        max-height: none !important;
+    }
+
+    #insideTableWrap,
+    #tempVisitorsWrap,
+    .panel:has(#insideTableWrap) .table-wrap,
+    .panel:has(#tempVisitorsWrap) .table-wrap {
+        height: 300px !important;
+        min-height: 300px !important;
+        max-height: 300px !important;
+    }
+}
+
+
+/* =========================================================
+   Form spacing polish
+   Adds breathing room inside inputs and dropdowns.
+   ========================================================= */
+
+/* More inner spacing for all form fields */
+.form-grid input,
+.form-grid select {
+    padding-left: 18px !important;
+    padding-right: 48px !important;
+}
+
+/* Cleaner dropdown spacing so the arrow is not too close to the edge */
+.form-grid select {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+
+    background-image:
+        linear-gradient(45deg, transparent 50%, #c8f7ff 50%),
+        linear-gradient(135deg, #c8f7ff 50%, transparent 50%),
+        linear-gradient(180deg, rgba(3, 10, 26, 0.72), rgba(1, 7, 18, 0.72)) !important;
+    background-position:
+        calc(100% - 24px) center,
+        calc(100% - 17px) center,
+        0 0 !important;
+    background-size:
+        7px 7px,
+        7px 7px,
+        100% 100% !important;
+    background-repeat: no-repeat !important;
+}
+
+/* Give the form layout a little more breathing room inside cards */
+#vehicles .form-grid,
+#temporary .form-grid {
+    gap: 14px 16px !important;
+}
+
+/* Keep form controls away from panel edges */
+#vehicles,
+#temporary {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+}
+
+/* Slightly improve placeholder readability */
+.form-grid input::placeholder {
+    color: #8aa3c7 !important;
+}
+
+
+
+/* =========================================================
+   EASTACCESS REAL MANUAL CONTROL REDESIGN
+   This section uses new HTML, not CSS-only fake labels.
+   ========================================================= */
+
+#manual.manual-premium {
+    position: relative !important;
+    padding: 24px 26px 28px !important;
+    overflow: hidden !important;
+}
+
+#manual.manual-premium::before {
+    content: "" !important;
+    position: absolute !important;
+    inset: 0 !important;
+    background:
+        radial-gradient(circle at 14% 20%, rgba(34, 211, 238, 0.14), transparent 28%),
+        radial-gradient(circle at 88% 82%, rgba(34, 197, 94, 0.11), transparent 28%) !important;
+    pointer-events: none !important;
+}
+
+#manual .premium-manual-header {
+    position: relative !important;
+    z-index: 4 !important;
+    margin-bottom: 18px !important;
+}
+
+#manual .premium-manual-header .badge {
+    display: none !important;
+}
+
+#manual .manual-premium-grid {
+    position: relative !important;
+    z-index: 3 !important;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(320px, 1fr)) !important;
+    gap: 24px !important;
+    padding: 18px !important;
+    border-radius: 28px !important;
+    background:
+        linear-gradient(90deg,
+            rgba(34, 211, 238, 0.10) 0%,
+            rgba(34, 211, 238, 0.035) 49.7%,
+            rgba(34, 211, 238, 0.28) 50%,
+            rgba(34, 211, 238, 0.035) 50.3%,
+            rgba(34, 197, 94, 0.08) 100%),
+        rgba(2, 6, 23, 0.22) !important;
+    border: 1px solid rgba(34, 211, 238, 0.16) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.03),
+        0 18px 50px rgba(0,0,0,0.24) !important;
+}
+
+/* Stop old CSS-only experiments from affecting new manual section */
+#manual .manual-premium-grid::before,
+#manual .manual-premium-grid::after,
+#manual .manual-lane-card::before,
+#manual .manual-lane-card::after,
+#manual .command-lane-card::before,
+#manual .command-lane-card::after {
+    content: none !important;
+    display: none !important;
+}
+
+@media (max-width: 900px) {
+    #manual .manual-premium-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+
+/* =========================================================
+   OPTION D - COMMAND PAD
+   Closer to the preview. CMD text removed as requested.
+   ========================================================= */
+
+#manual.manual-option-d .command-lane-card {
+    padding: 20px !important;
+    border-radius: 24px !important;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.09), transparent 38%),
+        linear-gradient(180deg, rgba(4, 13, 33, 0.86), rgba(2, 7, 20, 0.76)) !important;
+    border: 1px solid rgba(34, 211, 238, 0.16) !important;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.03) !important;
+}
+
+#manual.manual-option-d .command-lane-title {
+    height: 64px !important;
+    margin-bottom: 18px !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
+    align-items: center !important;
+    gap: 18px !important;
+}
+
+#manual.manual-option-d .command-lane-title span {
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.42), transparent) !important;
+}
+
+#manual.manual-option-d .command-lane-title h4 {
+    margin: 0 !important;
+    color: #22d3ee !important;
+    font-size: 24px !important;
+    font-weight: 950 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.16em !important;
+    text-align: center !important;
+}
+
+#manual.manual-option-d .command-pad-btn {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 130px !important;
+    margin: 0 0 20px !important;
+    padding: 0 88px 0 160px !important;
+    display: flex !important;
+    align-items: center !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+    clip-path: polygon(24px 0, 100% 0, 100% calc(100% - 24px), calc(100% - 24px) 100%, 0 100%, 0 24px) !important;
+    transition: transform 0.18s ease, filter 0.18s ease !important;
+}
+
+#manual.manual-option-d .command-pad-btn:last-child {
+    margin-bottom: 0 !important;
+}
+
+#manual.manual-option-d .command-pad-btn:hover {
+    transform: translateY(-2px) !important;
+    filter: brightness(1.08) !important;
+}
+
+#manual.manual-option-d .command-open {
+    background:
+        radial-gradient(circle at 16% 50%, rgba(19, 236, 181, 0.18), transparent 30%),
+        linear-gradient(135deg, rgba(2, 43, 40, 0.98), rgba(4, 78, 48, 0.94)) !important;
+    border: 2px solid rgba(19, 236, 181, 0.92) !important;
+    box-shadow:
+        0 0 28px rgba(19, 236, 181, 0.18),
+        inset 0 0 32px rgba(19, 236, 181, 0.08) !important;
+}
+
+#manual.manual-option-d .command-close {
+    background:
+        radial-gradient(circle at 16% 50%, rgba(255, 78, 48, 0.17), transparent 30%),
+        linear-gradient(135deg, rgba(46, 9, 9, 0.98), rgba(96, 22, 18, 0.94)) !important;
+    border: 2px solid rgba(255, 78, 48, 0.92) !important;
+    box-shadow:
+        0 0 28px rgba(255, 78, 48, 0.18),
+        inset 0 0 32px rgba(255, 78, 48, 0.08) !important;
+}
+
+#manual.manual-option-d .command-pad-btn::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 124px !important;
+    height: 100% !important;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.07), transparent),
+        rgba(0,0,0,0.15) !important;
+    border-right: 1px solid currentColor !important;
+    opacity: 0.70 !important;
+    z-index: 1 !important;
+}
+
+#manual.manual-option-d .command-pad-btn::after {
+    content: "" !important;
+    position: absolute !important;
+    right: 34px !important;
+    top: 50% !important;
+    width: 44px !important;
+    height: 22px !important;
+    transform: translateY(-50%) skewX(-18deg) !important;
+    background: repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 18px) !important;
+    opacity: 0.75 !important;
+    z-index: 4 !important;
+}
+
+#manual.manual-option-d .command-open {
+    color: #13ecb5 !important;
+}
+
+#manual.manual-option-d .command-close {
+    color: #ff4e30 !important;
+}
+
+#manual.manual-option-d .command-icon {
+    position: absolute !important;
+    left: 42px !important;
+    top: 50% !important;
+    width: 48px !important;
+    height: 76px !important;
+    transform: translateY(-50%) !important;
+    z-index: 5 !important;
+    display: grid !important;
+    place-items: start center !important;
+}
+
+#manual.manual-option-d .command-symbol {
+    display: block !important;
+    margin-top: 4px !important;
+    font-size: 44px !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+    color: currentColor !important;
+    text-shadow: 0 0 18px currentColor !important;
+}
+
+#manual.manual-option-d .command-dot {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 5px !important;
+    width: 13px !important;
+    height: 13px !important;
+    border-radius: 999px !important;
+    transform: translateX(-50%) !important;
+    background: currentColor !important;
+    box-shadow: 0 0 16px currentColor !important;
+}
+
+#manual.manual-option-d .command-copy {
+    position: relative !important;
+    z-index: 5 !important;
+    color: #f8fafc !important;
+}
+
+#manual.manual-option-d .command-copy strong {
+    display: block !important;
+    color: #f8fafc !important;
+    font-size: clamp(24px, 2vw, 34px) !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.05em !important;
+    text-transform: uppercase !important;
+    text-shadow: 0 0 18px rgba(0,0,0,0.38) !important;
+}
+
+#manual.manual-option-d .command-copy small {
+    display: block !important;
+    margin-top: 8px !important;
+    font-size: 13px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.10em !important;
+    text-transform: uppercase !important;
+}
+
+#manual.manual-option-d .command-open .command-copy small {
+    color: #13ecb5 !important;
+}
+
+#manual.manual-option-d .command-close .command-copy small {
+    color: #ff6b4a !important;
+}
+
+#manual.manual-option-d .command-pad-btn .command-slashes {
+    position: absolute !important;
+    right: 34px !important;
+    bottom: 28px !important;
+    width: 52px !important;
+    height: 14px !important;
+    background: repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 18px) !important;
+    transform: skewX(-18deg) !important;
+    opacity: 0.70 !important;
+    z-index: 4 !important;
+}
+
+
+/* =========================================================
+   FINAL OPTION D FIX - close to generated mockup
+   Fixes hidden text caused by old .command-copy display:none rules.
+   ========================================================= */
+
+#manual.manual-option-d .command-copy,
+#manual.manual-option-d .command-copy strong,
+#manual.manual-option-d .command-copy small,
+#manual.manual-option-d .command-icon,
+#manual.manual-option-d .command-symbol,
+#manual.manual-option-d .command-dot,
+#manual.manual-option-d .command-slashes {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+#manual.manual-option-d {
+    padding: 26px !important;
+    background:
+        radial-gradient(circle at 18% 15%, rgba(34, 211, 238, 0.15), transparent 32%),
+        radial-gradient(circle at 88% 88%, rgba(34, 197, 94, 0.10), transparent 30%),
+        linear-gradient(180deg, rgba(5, 15, 36, 0.92), rgba(2, 8, 21, 0.82)) !important;
+    border: 1px solid rgba(34, 211, 238, 0.22) !important;
+}
+
+#manual.manual-option-d .premium-manual-header {
+    margin-bottom: 22px !important;
+}
+
+#manual.manual-option-d .manual-premium-grid.command-pad-grid {
+    grid-template-columns: repeat(2, minmax(360px, 1fr)) !important;
+    gap: 26px !important;
+    padding: 22px !important;
+    border-radius: 30px !important;
+    background:
+        linear-gradient(90deg,
+            rgba(34, 211, 238, 0.10) 0%,
+            rgba(34, 211, 238, 0.035) 49.6%,
+            rgba(34, 211, 238, 0.35) 50%,
+            rgba(34, 211, 238, 0.035) 50.4%,
+            rgba(34, 197, 94, 0.08) 100%),
+        rgba(2, 6, 23, 0.24) !important;
+    border: 1px solid rgba(34, 211, 238, 0.18) !important;
+}
+
+#manual.manual-option-d .command-lane-card {
+    padding: 20px !important;
+    border-radius: 26px !important;
+    background:
+        radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.11), transparent 38%),
+        linear-gradient(180deg, rgba(4, 13, 33, 0.88), rgba(2, 7, 20, 0.80)) !important;
+    border: 1px solid rgba(34, 211, 238, 0.17) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.03),
+        0 16px 38px rgba(0,0,0,0.18) !important;
+}
+
+#manual.manual-option-d .command-lane-title {
+    height: 66px !important;
+    margin-bottom: 18px !important;
+    display: grid !important;
+    grid-template-columns: 1fr auto 1fr !important;
+    align-items: center !important;
+    gap: 18px !important;
+}
+
+#manual.manual-option-d .command-lane-title h4 {
+    margin: 0 !important;
+    color: #22d3ee !important;
+    font-size: 24px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.16em !important;
+    text-transform: uppercase !important;
+    text-align: center !important;
+}
+
+#manual.manual-option-d .command-lane-title span {
+    display: block !important;
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.42), transparent) !important;
+}
+
+/* Main command pad buttons */
+#manual.manual-option-d .command-pad-btn {
+    position: relative !important;
+    width: 100% !important;
+    min-height: 138px !important;
+    margin: 0 0 22px !important;
+    padding: 0 88px 0 178px !important;
+    display: flex !important;
+    align-items: center !important;
+    border-radius: 9px !important;
+    overflow: hidden !important;
+    cursor: pointer !important;
+    isolation: isolate !important;
+    clip-path: polygon(26px 0, 100% 0, 100% calc(100% - 26px), calc(100% - 26px) 100%, 0 100%, 0 26px) !important;
+    transition: transform 0.18s ease, filter 0.18s ease !important;
+}
+
+#manual.manual-option-d .command-pad-btn:last-child {
+    margin-bottom: 0 !important;
+}
+
+#manual.manual-option-d .command-pad-btn:hover {
+    transform: translateY(-2px) !important;
+    filter: brightness(1.08) !important;
+}
+
+#manual.manual-option-d .command-open {
+    color: #13ecb5 !important;
+    background:
+        radial-gradient(circle at 16% 50%, rgba(19, 236, 181, 0.18), transparent 32%),
+        linear-gradient(135deg, rgba(2, 43, 40, 0.98), rgba(4, 78, 48, 0.94)) !important;
+    border: 2px solid rgba(19, 236, 181, 0.92) !important;
+    box-shadow:
+        0 0 30px rgba(19, 236, 181, 0.18),
+        inset 0 0 34px rgba(19, 236, 181, 0.08) !important;
+}
+
+#manual.manual-option-d .command-close {
+    color: #ff4e30 !important;
+    background:
+        radial-gradient(circle at 16% 50%, rgba(255, 78, 48, 0.17), transparent 32%),
+        linear-gradient(135deg, rgba(46, 9, 9, 0.98), rgba(96, 22, 18, 0.94)) !important;
+    border: 2px solid rgba(255, 78, 48, 0.92) !important;
+    box-shadow:
+        0 0 30px rgba(255, 78, 48, 0.18),
+        inset 0 0 34px rgba(255, 78, 48, 0.08) !important;
+}
+
+/* Left icon block */
+#manual.manual-option-d .command-pad-btn::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 132px !important;
+    height: 100% !important;
+    background:
+        linear-gradient(180deg, rgba(255,255,255,0.08), transparent),
+        rgba(0, 0, 0, 0.16) !important;
+    border-right: 1px solid currentColor !important;
+    opacity: 0.72 !important;
+    z-index: 1 !important;
+}
+
+/* Dotted matrix on the right side like preview */
+#manual.manual-option-d .command-pad-btn::after {
+    content: "" !important;
+    position: absolute !important;
+    right: 76px !important;
+    top: 36px !important;
+    width: 86px !important;
+    height: 58px !important;
+    opacity: 0.35 !important;
+    background-image: radial-gradient(currentColor 1.5px, transparent 1.5px) !important;
+    background-size: 12px 12px !important;
+    z-index: 2 !important;
+}
+
+/* Icon stack: arrow + status dot, no CMD text */
+#manual.manual-option-d .command-icon {
+    position: absolute !important;
+    left: 42px !important;
+    top: 50% !important;
+    width: 54px !important;
+    height: 82px !important;
+    transform: translateY(-50%) !important;
+    z-index: 5 !important;
+    text-align: center !important;
+}
+
+#manual.manual-option-d .command-symbol {
+    display: block !important;
+    margin-top: 4px !important;
+    font-size: 48px !important;
+    line-height: 1 !important;
+    font-weight: 950 !important;
+    color: currentColor !important;
+    text-shadow: 0 0 18px currentColor !important;
+}
+
+#manual.manual-option-d .command-dot {
+    position: absolute !important;
+    left: 50% !important;
+    bottom: 5px !important;
+    width: 13px !important;
+    height: 13px !important;
+    border-radius: 999px !important;
+    transform: translateX(-50%) !important;
+    background: currentColor !important;
+    box-shadow: 0 0 16px currentColor !important;
+}
+
+#manual.manual-option-d .command-copy {
+    position: relative !important;
+    z-index: 5 !important;
+    color: #f8fafc !important;
+    text-align: center !important;
+    width: 100% !important;
+}
+
+#manual.manual-option-d .command-copy strong {
+    display: block !important;
+    color: #f8fafc !important;
+    font-size: clamp(26px, 2.3vw, 38px) !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase !important;
+    text-shadow: 0 0 18px rgba(0,0,0,0.40) !important;
+}
+
+#manual.manual-option-d .command-copy small {
+    display: block !important;
+    margin-top: 9px !important;
+    font-size: 13px !important;
+    font-weight: 950 !important;
+    letter-spacing: 0.10em !important;
+    text-transform: uppercase !important;
+}
+
+#manual.manual-option-d .command-open .command-copy small {
+    color: #13ecb5 !important;
+}
+
+#manual.manual-option-d .command-close .command-copy small {
+    color: #ff6b4a !important;
+}
+
+#manual.manual-option-d .command-slashes {
+    position: absolute !important;
+    right: 34px !important;
+    bottom: 32px !important;
+    width: 54px !important;
+    height: 14px !important;
+    background: repeating-linear-gradient(90deg, currentColor 0 10px, transparent 10px 18px) !important;
+    transform: skewX(-18deg) !important;
+    opacity: 0.82 !important;
+    z-index: 5 !important;
+}
+
+@media (max-width: 900px) {
+    #manual.manual-option-d .manual-premium-grid.command-pad-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+
+/* =========================================================
+   OPTION D CLEANUP REQUEST
+   - Remove status dot under arrow
+   - Remove Raise Barrier / Lower Barrier text
+   - Align dotted matrix with the 3 slashes on the right
+   ========================================================= */
+
+/* Remove confusing dot under arrow */
+#manual.manual-option-d .command-dot {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Remove redundant subtext */
+#manual.manual-option-d .command-copy small {
+    display: none !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+}
+
+/* Re-center main text now that subtext is removed */
+#manual.manual-option-d .command-copy {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100% !important;
+    text-align: center !important;
+}
+
+#manual.manual-option-d .command-copy strong {
+    margin: 0 !important;
+    line-height: 1.1 !important;
+}
+
+/* Keep arrow icon clean and centered without the dot */
+#manual.manual-option-d .command-icon {
+    height: 56px !important;
+    display: grid !important;
+    place-items: center !important;
+}
+
+#manual.manual-option-d .command-symbol {
+    margin-top: 0 !important;
+}
+
+/* Align dotted matrix with the 3 slashes on the right */
+#manual.manual-option-d .command-pad-btn::after {
+    top: 50% !important;
+    right: 92px !important;
+    width: 74px !important;
+    height: 34px !important;
+    transform: translateY(-50%) !important;
+    background-size: 11px 11px !important;
+    opacity: 0.34 !important;
+}
+
+/* Put the 3 slashes at the same vertical center line as the dots */
+#manual.manual-option-d .command-slashes {
+    top: 50% !important;
+    bottom: auto !important;
+    right: 34px !important;
+    transform: translateY(-50%) skewX(-18deg) !important;
+}
+
+/* Slightly tighter command button after removing redundant text */
+#manual.manual-option-d .command-pad-btn {
+    min-height: 122px !important;
+}
+
+
+/* =========================================================
+   OPTION D RIGHT ACCENT FIX
+   Dots stay above, 3 slashes stay below.
+   They no longer overlap.
+   ========================================================= */
+
+/* Move dotted matrix above the 3 slashes */
+#manual.manual-option-d .command-pad-btn::after {
+    top: 30px !important;
+    right: 84px !important;
+    width: 78px !important;
+    height: 38px !important;
+    transform: none !important;
+    background-image: radial-gradient(currentColor 1.45px, transparent 1.45px) !important;
+    background-size: 10px 10px !important;
+    background-repeat: repeat !important;
+    opacity: 0.32 !important;
+    z-index: 2 !important;
+}
+
+/* Place the 3 slashes below the dotted matrix */
+#manual.manual-option-d .command-slashes {
+    top: auto !important;
+    bottom: 30px !important;
+    right: 34px !important;
+    width: 54px !important;
+    height: 14px !important;
+    transform: skewX(-18deg) !important;
+    background: repeating-linear-gradient(
+        90deg,
+        currentColor 0 10px,
+        transparent 10px 18px
+    ) !important;
+    opacity: 0.86 !important;
+    z-index: 5 !important;
+}
+
+/* Give the text a little more safe space so it does not touch the accents */
+#manual.manual-option-d .command-pad-btn {
+    padding-right: 190px !important;
+}
+
+/* Keep main button text centered in its safe area */
+#manual.manual-option-d .command-copy {
+    text-align: center !important;
+}
+
+
+/* =========================================================
+   OPTION D FINAL TEXT FIX
+   Fixes broken wrapping like "OPEN / ENTRY".
+   Keeps dots above slashes but moves them away from text.
+   ========================================================= */
+
+/* Make the buttons wider internally and prevent text wrapping */
+#manual.manual-option-d .command-pad-btn {
+    padding-left: 148px !important;
+    padding-right: 150px !important;
+    min-height: 122px !important;
+}
+
+/* Text stays on ONE line */
+#manual.manual-option-d .command-copy {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+}
+
+#manual.manual-option-d .command-copy strong {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    font-size: clamp(24px, 1.85vw, 32px) !important;
+    letter-spacing: 0.035em !important;
+    line-height: 1 !important;
+}
+
+/* Keep redundant subtext hidden */
+#manual.manual-option-d .command-copy small {
+    display: none !important;
+}
+
+/* Right accents: dots above, slashes below, never on top of text */
+#manual.manual-option-d .command-pad-btn::after {
+    top: 28px !important;
+    right: 68px !important;
+    width: 78px !important;
+    height: 34px !important;
+    transform: none !important;
+    background-image: radial-gradient(currentColor 1.35px, transparent 1.35px) !important;
+    background-size: 10px 10px !important;
+    background-repeat: repeat !important;
+    opacity: 0.26 !important;
+    z-index: 2 !important;
+}
+
+#manual.manual-option-d .command-slashes {
+    top: auto !important;
+    bottom: 30px !important;
+    right: 42px !important;
+    width: 44px !important;
+    height: 12px !important;
+    transform: skewX(-18deg) !important;
+    background: repeating-linear-gradient(
+        90deg,
+        currentColor 0 9px,
+        transparent 9px 16px
+    ) !important;
+    opacity: 0.82 !important;
+    z-index: 5 !important;
+}
+
+/* Slightly reduce left icon block so text has more room */
+#manual.manual-option-d .command-pad-btn::before {
+    width: 118px !important;
+}
+
+#manual.manual-option-d .command-icon {
+    left: 38px !important;
+}
+
+/* Remove unnecessary top-right option label if present */
+#manual.manual-option-d .option-label,
+#manual.manual-option-d .manual-option-label {
+    display: none !important;
+}
+
+
+/* =========================================================
+   OPTION D ACCENT ALIGNMENT FIX
+   Dots and 3 slashes are now in one clean vertical accent column.
+   ========================================================= */
+
+/* Reserve a clean accent area on the right side */
+#manual.manual-option-d .command-pad-btn {
+    padding-right: 170px !important;
+}
+
+/* Dot matrix: centered directly above the three slashes */
+#manual.manual-option-d .command-pad-btn::after {
+    top: 31px !important;
+    right: 38px !important;
+    width: 70px !important;
+    height: 36px !important;
+    transform: none !important;
+    background-image: radial-gradient(currentColor 1.35px, transparent 1.35px) !important;
+    background-size: 10px 10px !important;
+    background-repeat: repeat !important;
+    opacity: 0.28 !important;
+    z-index: 2 !important;
+}
+
+/* 3 slashes: directly under the dot matrix */
+#manual.manual-option-d .command-slashes {
+    top: 74px !important;
+    bottom: auto !important;
+    right: 49px !important;
+    width: 50px !important;
+    height: 14px !important;
+    transform: skewX(-18deg) !important;
+    background: repeating-linear-gradient(
+        90deg,
+        currentColor 0 10px,
+        transparent 10px 18px
+    ) !important;
+    opacity: 0.88 !important;
+    z-index: 5 !important;
+}
+
+/* Keep text one-line and away from the accent column */
+#manual.manual-option-d .command-copy strong {
+    white-space: nowrap !important;
+    font-size: clamp(23px, 1.75vw, 31px) !important;
+}
+
+
+/* =========================================================
+   OPTION D DOT MATRIX POSITION TWEAK
+   Lowers the small dot matrix slightly so it sits better above the slashes.
+   ========================================================= */
+
+#manual.manual-option-d .command-pad-btn::after {
+    top: 39px !important;
+}
+
+
+/* =========================================================
+   OPTION D FINAL CORRECTION
+   - ENTRANCE text instead of ENTRY in manual controls
+   - Dots stay higher
+   - 3 slashes/box marks moved lower to avoid being too close to dots
+   ========================================================= */
+
+/* Dots stay above */
+#manual.manual-option-d .command-pad-btn::after {
+    top: 29px !important;
+    right: 38px !important;
+    width: 70px !important;
+    height: 34px !important;
+    transform: none !important;
+    background-image: radial-gradient(currentColor 1.35px, transparent 1.35px) !important;
+    background-size: 10px 10px !important;
+    background-repeat: repeat !important;
+    opacity: 0.28 !important;
+    z-index: 2 !important;
+}
+
+/* 3 slashes/box marks moved lower, not the dots */
+#manual.manual-option-d .command-slashes {
+    top: 88px !important;
+    bottom: auto !important;
+    right: 49px !important;
+    width: 50px !important;
+    height: 14px !important;
+    transform: skewX(-18deg) !important;
+    background: repeating-linear-gradient(
+        90deg,
+        currentColor 0 10px,
+        transparent 10px 18px
+    ) !important;
+    opacity: 0.88 !important;
+    z-index: 5 !important;
+}
+
+/* Wider safe space for Entrance text */
+#manual.manual-option-d .command-pad-btn {
+    padding-left: 148px !important;
+    padding-right: 170px !important;
+}
+
+#manual.manual-option-d .command-copy strong {
+    white-space: nowrap !important;
+    font-size: clamp(22px, 1.65vw, 30px) !important;
+    letter-spacing: 0.03em !important;
+}
+
+/* Slightly smaller lane title so ENTRANCE BARRIER fits well */
+#manual.manual-option-d .command-lane-title h4 {
+    font-size: clamp(18px, 1.65vw, 24px) !important;
+    white-space: nowrap !important;
+}
+
+
+/* =========================================================
+   FINAL REQUEST PATCH
+   - Manual label uses ENTRANCE wording
+   - Adds 2 more dot rows on right accent
+   - Currently Inside highlights overstaying temporary visitors
+   ========================================================= */
+
+/* Make ENTRANCE BARRIER fit nicely */
+#manual.manual-option-d .command-lane-title h4 {
+    font-size: clamp(17px, 1.55vw, 23px) !important;
+    white-space: nowrap !important;
+}
+
+/* Keep Entrance/Open/Close text in one line */
+#manual.manual-option-d .command-copy strong {
+    white-space: nowrap !important;
+    font-size: clamp(21px, 1.55vw, 29px) !important;
+    letter-spacing: 0.025em !important;
+}
+
+/* Dot matrix: add two rows while keeping the slash spacing unchanged */
+#manual.manual-option-d .command-pad-btn::after {
+    top: 29px !important;
+    right: 38px !important;
+    width: 70px !important;
+    height: 54px !important;
+    transform: none !important;
+    background-image: radial-gradient(currentColor 1.35px, transparent 1.35px) !important;
+    background-size: 10px 10px !important;
+    background-repeat: repeat !important;
+    opacity: 0.28 !important;
+    z-index: 2 !important;
+}
+
+/* Keep the 3 slashes where they already looked okay */
+#manual.manual-option-d .command-slashes {
+    top: 88px !important;
+    bottom: auto !important;
+    right: 49px !important;
+}
+
+/* Currently Inside discreet overstay highlight */
+#insideTable tr.overstayed-row {
+    background:
+        linear-gradient(90deg, rgba(239, 68, 68, 0.16), rgba(239, 68, 68, 0.035)) !important;
+    box-shadow: inset 4px 0 0 rgba(239, 68, 68, 0.86) !important;
+}
+
+#insideTable tr.overstayed-row td {
+    color: #ffe7e7 !important;
+}
+
+.inside-status-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 74px;
+    padding: 5px 9px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 1px solid rgba(148, 163, 184, 0.18);
+    background: rgba(15, 23, 42, 0.56);
+    color: #cbd5e1;
+}
+
+.inside-status-badge.normal {
+    color: #bfdbfe;
+    border-color: rgba(56, 189, 248, 0.20);
+    background: rgba(56, 189, 248, 0.08);
+}
+
+.inside-status-badge.temporary {
+    color: #a7f3d0;
+    border-color: rgba(34, 197, 94, 0.26);
+    background: rgba(34, 197, 94, 0.10);
+}
+
+.inside-status-badge.overstayed {
+    color: #fecaca;
+    border-color: rgba(239, 68, 68, 0.55);
+    background: rgba(239, 68, 68, 0.20);
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.10);
+}
+
+
+/* =========================================================
+   OVERSTAYED final compatibility fix
+   Keeps the red highlight even if older JS/app still sends "overstaying".
+   ========================================================= */
+
+#insideTable tr.overstayed-row,
+#insideTable tr.overstaying-row {
+    background:
+        linear-gradient(90deg, rgba(239, 68, 68, 0.16), rgba(239, 68, 68, 0.035)) !important;
+    box-shadow: inset 4px 0 0 rgba(239, 68, 68, 0.86) !important;
+}
+
+#insideTable tr.overstayed-row td,
+#insideTable tr.overstaying-row td {
+    color: #ffe7e7 !important;
+}
+
+.inside-status-badge.overstayed,
+.inside-status-badge.overstaying {
+    color: #fecaca !important;
+    border-color: rgba(239, 68, 68, 0.55) !important;
+    background: rgba(239, 68, 68, 0.20) !important;
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.10) !important;
+}
+
+
+/* =========================================================
+   FINAL FORM BUTTON FIX
+   - Removes plus/check icons
+   - Button text is not all caps
+   - Blue tactical style, similar family to Manual Command
+   - Full rounded rectangle, not clipped
+   - Aligns both form buttons at the bottom
+   ========================================================= */
+
+/* Make form panels equal height and reserve bottom space for buttons */
+.management-row #vehicles,
+.management-row #temporary {
+    position: relative !important;
+    min-height: 398px !important;
+    padding-bottom: 96px !important;
+}
+
+/* Position both form action buttons at the same height */
+#vehicles .form-grid button,
+#temporary .form-grid button {
+    position: absolute !important;
+    left: 24px !important;
+    right: 24px !important;
+    bottom: 24px !important;
+    width: auto !important;
+    min-height: 62px !important;
+    margin: 0 !important;
+    padding: 0 120px 0 28px !important;
+
+    border-radius: 18px !important;
+    border: 1.5px solid rgba(56, 189, 248, 0.78) !important;
+    clip-path: none !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+
+    background:
+        radial-gradient(circle at 16% 50%, rgba(34, 211, 238, 0.22), transparent 32%),
+        linear-gradient(135deg, rgba(7, 89, 133, 0.98), rgba(3, 105, 161, 0.96), rgba(14, 116, 144, 0.94)) !important;
+
+    color: #f8fafc !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+
+    box-shadow:
+        0 0 22px rgba(56, 189, 248, 0.13),
+        inset 0 0 26px rgba(56, 189, 248, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.10) !important;
+
+    transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+/* No left icon. Use right-side dot matrix only. */
+#vehicles .form-grid button::before,
+#temporary .form-grid button::before {
+    content: "" !important;
+    position: absolute !important;
+    left: auto !important;
+    top: 15px !important;
+    right: 62px !important;
+    width: 58px !important;
+    height: 26px !important;
+    transform: none !important;
+
+    display: block !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background-image: radial-gradient(#7dd3fc 1.15px, transparent 1.15px) !important;
+    background-size: 9px 9px !important;
+    background-repeat: repeat !important;
+    opacity: 0.28 !important;
+    box-shadow: none !important;
+    z-index: 2 !important;
+}
+
+/* Right-side 3 marks, same family as command buttons but blue */
+#vehicles .form-grid button::after,
+#temporary .form-grid button::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 39px !important;
+    right: 36px !important;
+    width: 42px !important;
+    height: 12px !important;
+    transform: skewX(-18deg) !important;
+    background: repeating-linear-gradient(
+        90deg,
+        #38bdf8 0 8px,
+        transparent 8px 14px
+    ) !important;
+    opacity: 0.84 !important;
+    z-index: 3 !important;
+}
+
+/* Hover/active states */
+#vehicles .form-grid button:hover,
+#temporary .form-grid button:hover {
+    transform: translateY(-2px) !important;
+    filter: brightness(1.08) !important;
+    box-shadow:
+        0 0 28px rgba(56, 189, 248, 0.20),
+        0 0 0 3px rgba(56, 189, 248, 0.055),
+        inset 0 0 28px rgba(56, 189, 248, 0.10),
+        inset 0 1px 0 rgba(255,255,255,0.12) !important;
+}
+
+#vehicles .form-grid button:active,
+#temporary .form-grid button:active {
+    transform: translateY(0) scale(0.995) !important;
+}
+
+#vehicles .form-grid button:disabled,
+#temporary .form-grid button:disabled {
+    opacity: 0.72 !important;
+    cursor: wait !important;
+}
+
+/* Mobile fallback */
+@media (max-width: 900px) {
+    .management-row #vehicles,
+    .management-row #temporary {
+        min-height: auto !important;
+        padding-bottom: 24px !important;
+    }
+
+    #vehicles .form-grid button,
+    #temporary .form-grid button {
+        position: relative !important;
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+        width: 100% !important;
+    }
+}
+
+
+/* =========================================================
+   FINAL FORM BUTTON POSITION FIX
+   - Removes the absolute overlay problem
+   - Buttons stay below the fields
+   - Left and right buttons align better
+   - Keeps the blue command-style rounded rectangle look
+   ========================================================= */
+
+/* Stop the panels from reserving fake button space */
+.management-row #vehicles,
+.management-row #temporary {
+    min-height: 398px !important;
+    padding-bottom: 24px !important;
+}
+
+/* Put buttons back inside the form flow, not floating over inputs */
+#vehicles .form-grid button,
+#temporary .form-grid button {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    bottom: auto !important;
+
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    margin: 0 !important;
+
+    min-height: 62px !important;
+    padding: 0 120px 0 28px !important;
+
+    border-radius: 18px !important;
+    border: 1.5px solid rgba(56, 189, 248, 0.78) !important;
+    clip-path: none !important;
+
+    background:
+        radial-gradient(circle at 16% 50%, rgba(34, 211, 238, 0.22), transparent 32%),
+        linear-gradient(135deg, rgba(7, 89, 133, 0.98), rgba(3, 105, 161, 0.96), rgba(14, 116, 144, 0.94)) !important;
+
+    color: #f8fafc !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+
+    box-shadow:
+        0 0 22px rgba(56, 189, 248, 0.13),
+        inset 0 0 26px rgba(56, 189, 248, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.10) !important;
+}
+
+/* This pushes the left button down to match the Temporary Access button height */
+#vehicles .form-grid button {
+    margin-top: 58px !important;
+}
+
+/* Keep right-side accent only, no left icon */
+#vehicles .form-grid button::before,
+#temporary .form-grid button::before {
+    content: "" !important;
+    position: absolute !important;
+    left: auto !important;
+    top: 15px !important;
+    right: 62px !important;
+    width: 58px !important;
+    height: 26px !important;
+    transform: none !important;
+
+    display: block !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background-image: radial-gradient(#7dd3fc 1.15px, transparent 1.15px) !important;
+    background-size: 9px 9px !important;
+    background-repeat: repeat !important;
+    opacity: 0.28 !important;
+    box-shadow: none !important;
+    z-index: 2 !important;
+}
+
+/* Blue slash marks on the right */
+#vehicles .form-grid button::after,
+#temporary .form-grid button::after {
+    content: "" !important;
+    position: absolute !important;
+    top: 39px !important;
+    right: 36px !important;
+    width: 42px !important;
+    height: 12px !important;
+    transform: skewX(-18deg) !important;
+    background: repeating-linear-gradient(
+        90deg,
+        #38bdf8 0 8px,
+        transparent 8px 14px
+    ) !important;
+    opacity: 0.84 !important;
+    z-index: 3 !important;
+}
+
+#vehicles .form-grid button:hover,
+#temporary .form-grid button:hover {
+    transform: translateY(-2px) !important;
+    filter: brightness(1.08) !important;
+    box-shadow:
+        0 0 28px rgba(56, 189, 248, 0.20),
+        0 0 0 3px rgba(56, 189, 248, 0.055),
+        inset 0 0 28px rgba(56, 189, 248, 0.10),
+        inset 0 1px 0 rgba(255,255,255,0.12) !important;
+}
+
+/* Mobile: no forced spacing */
+@media (max-width: 900px) {
+    .management-row #vehicles,
+    .management-row #temporary {
+        min-height: auto !important;
+    }
+
+    #vehicles .form-grid button {
+        margin-top: 0 !important;
+    }
+}
+
+
+
+/* =========================================================
+   FINAL FORM BUTTON CLEAN FIX
+   - Buttons are back in normal form flow, no floating/overlay
+   - No dot matrix
+   - Blue rounded rectangle style
+   - Only left and right slash/box marks beside the text
+   ========================================================= */
+
+/* Keep the form cards balanced without floating buttons */
+.management-row #vehicles,
+.management-row #temporary {
+    min-height: 398px !important;
+    padding-bottom: 24px !important;
+}
+
+/* Make sure the form buttons never float over fields */
+#vehicles form.form-grid > button[type="submit"],
+#temporary form.form-grid > button[type="submit"],
+#vehicles .form-grid button,
+#temporary .form-grid button {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    min-height: 62px !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 0 !important;
+
+    padding: 0 92px !important;
+    border-radius: 18px !important;
+    border: 1.5px solid rgba(56, 189, 248, 0.78) !important;
+    clip-path: none !important;
+    overflow: hidden !important;
+    isolation: isolate !important;
+
+    background:
+        linear-gradient(135deg, rgba(7, 89, 133, 0.98), rgba(3, 105, 161, 0.96), rgba(14, 116, 144, 0.94)) !important;
+
+    color: #f8fafc !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+
+    box-shadow:
+        0 0 22px rgba(56, 189, 248, 0.13),
+        inset 0 0 26px rgba(56, 189, 248, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.10) !important;
+
+    transition: transform 0.18s ease, filter 0.18s ease, box-shadow 0.18s ease !important;
+}
+
+/* Align Save Registered Vehicle with Grant Temporary Access */
+#vehicles form.form-grid > button[type="submit"],
+#vehicles .form-grid button {
+    margin-top: 58px !important;
+}
+
+#temporary form.form-grid > button[type="submit"],
+#temporary .form-grid button {
+    margin-top: 0 !important;
+}
+
+/* Remove old icon/dot-matrix behavior and create LEFT slash marks */
+#vehicles form.form-grid > button[type="submit"]::before,
+#temporary form.form-grid > button[type="submit"]::before,
+#vehicles .form-grid button::before,
+#temporary .form-grid button::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 34px !important;
+    right: auto !important;
+    top: 50% !important;
+    width: 44px !important;
+    height: 12px !important;
+    transform: translateY(-50%) skewX(-18deg) !important;
+
+    display: block !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: repeating-linear-gradient(
+        90deg,
+        #7dd3fc 0 8px,
+        transparent 8px 14px
+    ) !important;
+    background-size: auto !important;
+    background-repeat: repeat-x !important;
+    opacity: 0.82 !important;
+    box-shadow: none !important;
+    z-index: 3 !important;
+}
+
+/* RIGHT slash marks */
+#vehicles form.form-grid > button[type="submit"]::after,
+#temporary form.form-grid > button[type="submit"]::after,
+#vehicles .form-grid button::after,
+#temporary .form-grid button::after {
+    content: "" !important;
+    position: absolute !important;
+    right: 34px !important;
+    left: auto !important;
+    top: 50% !important;
+    width: 44px !important;
+    height: 12px !important;
+    transform: translateY(-50%) skewX(-18deg) !important;
+
+    background: repeating-linear-gradient(
+        90deg,
+        #38bdf8 0 8px,
+        transparent 8px 14px
+    ) !important;
+    opacity: 0.84 !important;
+    z-index: 3 !important;
+}
+
+/* Button hover */
+#vehicles form.form-grid > button[type="submit"]:hover,
+#temporary form.form-grid > button[type="submit"]:hover,
+#vehicles .form-grid button:hover,
+#temporary .form-grid button:hover {
+    transform: translateY(-2px) !important;
+    filter: brightness(1.08) !important;
+    box-shadow:
+        0 0 28px rgba(56, 189, 248, 0.20),
+        0 0 0 3px rgba(56, 189, 248, 0.055),
+        inset 0 0 28px rgba(56, 189, 248, 0.10),
+        inset 0 1px 0 rgba(255,255,255,0.12) !important;
+}
+
+/* Mobile: no forced vertical spacing */
+@media (max-width: 900px) {
+    .management-row #vehicles,
+    .management-row #temporary {
+        min-height: auto !important;
+    }
+
+    #vehicles form.form-grid > button[type="submit"],
+    #vehicles .form-grid button {
+        margin-top: 0 !important;
+    }
+}
+
+
+/* =========================================================
+   FORM BUTTON 3-MARK FIX + PLATE INPUT UPPERCASE LOOK
+   - Removes the cut/extra fourth slash.
+   - Keeps only exactly three marks on left and right.
+   - Plate number fields visually type in uppercase.
+   ========================================================= */
+
+input[name="plate_number"] {
+    text-transform: uppercase !important;
+}
+
+/* Exactly 3 marks on the LEFT */
+#vehicles form.form-grid > button[type="submit"]::before,
+#temporary form.form-grid > button[type="submit"]::before,
+#vehicles .form-grid button::before,
+#temporary .form-grid button::before {
+    width: 36px !important;
+    height: 12px !important;
+    left: 36px !important;
+    right: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) skewX(-18deg) !important;
+    background:
+        linear-gradient(
+            90deg,
+            #7dd3fc 0 8px,
+            transparent 8px 14px,
+            #7dd3fc 14px 22px,
+            transparent 22px 28px,
+            #7dd3fc 28px 36px
+        ) !important;
+    background-repeat: no-repeat !important;
+    opacity: 0.86 !important;
+}
+
+/* Exactly 3 marks on the RIGHT */
+#vehicles form.form-grid > button[type="submit"]::after,
+#temporary form.form-grid > button[type="submit"]::after,
+#vehicles .form-grid button::after,
+#temporary .form-grid button::after {
+    width: 36px !important;
+    height: 12px !important;
+    right: 36px !important;
+    left: auto !important;
+    top: 50% !important;
+    transform: translateY(-50%) skewX(-18deg) !important;
+    background:
+        linear-gradient(
+            90deg,
+            #38bdf8 0 8px,
+            transparent 8px 14px,
+            #38bdf8 14px 22px,
+            transparent 22px 28px,
+            #38bdf8 28px 36px
+        ) !important;
+    background-repeat: no-repeat !important;
+    opacity: 0.88 !important;
+}
+
+/* Keep enough space between button text and marks */
+#vehicles form.form-grid > button[type="submit"],
+#temporary form.form-grid > button[type="submit"],
+#vehicles .form-grid button,
+#temporary .form-grid button {
+    padding-left: 92px !important;
+    padding-right: 92px !important;
+}
+
+
+/* =========================================================
+   QUICK INPUT HELPERS POLISH
+   - Gate Command Center stays in one line
+   - Address/Destination fields are meant for block/lot numbers
+   - Name fields visually keep title-case style
+   ========================================================= */
+
+/* Sidebar subtitle one line */
+.sidebar .brand p,
+.sidebar .brand small,
+.sidebar .brand-subtitle,
+.brand p,
+.brand small,
+.brand-subtitle {
+    white-space: nowrap !important;
+    line-height: 1.15 !important;
+    font-size: 13px !important;
+}
+
+/* Keep sidebar header from squeezing the text too much */
+.sidebar .brand,
+.brand {
+    gap: 12px !important;
+}
+
+.sidebar .brand-text,
+.brand-text {
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+}
+
+/* Address and destination are now fast block/lot entry fields */
+input[name="address"],
+input[name="destination"] {
+    text-transform: none !important;
+}
+
+/* Owner/driver names should look like proper names, not all caps */
+input[name="owner"],
+input[name="driver_name"] {
+    text-transform: capitalize !important;
+}
+
+
+/* =========================================================
+   BLOCK/LOT FIELDS + LIVE FORM FIX
+   - Address/Destination ready as Block [no.] Lot [no.]
+   - Prevents form buttons from floating over fields
+   ========================================================= */
+
+.block-lot-group {
+    display: grid !important;
+    grid-template-columns: auto minmax(70px, 1fr) auto minmax(70px, 1fr) !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    min-height: 44px !important;
+    padding: 0 14px !important;
+    border: 1px solid rgba(148, 163, 184, 0.20) !important;
+    border-radius: 16px !important;
+    background: rgba(2, 6, 23, 0.58) !important;
+}
+
+.block-lot-label {
+    color: #c7d2fe !important;
+    font-size: 13px !important;
+    font-weight: 850 !important;
+    white-space: nowrap !important;
+}
+
+.block-lot-input {
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 8px 10px !important;
+    border: 1px solid rgba(34, 211, 238, 0.12) !important;
+    border-radius: 11px !important;
+    background: rgba(15, 23, 42, 0.46) !important;
+    color: var(--text) !important;
+    outline: none !important;
+    font-weight: 800 !important;
+}
+
+.block-lot-input:focus {
+    border-color: rgba(34, 211, 238, 0.58) !important;
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.07) !important;
+}
+
+/* Final button placement: normal form flow, never overlay fields */
+.management-row #vehicles,
+.management-row #temporary {
+    min-height: auto !important;
+    padding-bottom: 24px !important;
+}
+
+#vehicles form.form-grid > button[type="submit"],
+#temporary form.form-grid > button[type="submit"],
+#vehicles .form-grid button,
+#temporary .form-grid button {
+    position: relative !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    margin: 0 !important;
+    margin-top: 0 !important;
+}
+
+/* Blue rounded full button with only 3 side marks */
+#vehicles form.form-grid > button[type="submit"],
+#temporary form.form-grid > button[type="submit"] {
+    min-height: 62px !important;
+    padding: 0 92px !important;
+    border-radius: 18px !important;
+    border: 1.5px solid rgba(56, 189, 248, 0.78) !important;
+    clip-path: none !important;
+    background:
+        linear-gradient(135deg, rgba(7, 89, 133, 0.98), rgba(3, 105, 161, 0.96), rgba(14, 116, 144, 0.94)) !important;
+    color: #f8fafc !important;
+    font-size: 14px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.01em !important;
+    text-transform: none !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    box-shadow:
+        0 0 22px rgba(56, 189, 248, 0.13),
+        inset 0 0 26px rgba(56, 189, 248, 0.08),
+        inset 0 1px 0 rgba(255,255,255,0.10) !important;
+}
+
+#vehicles form.form-grid > button[type="submit"]::before,
+#temporary form.form-grid > button[type="submit"]::before {
+    content: "" !important;
+    position: absolute !important;
+    left: 36px !important;
+    top: 50% !important;
+    width: 36px !important;
+    height: 12px !important;
+    transform: translateY(-50%) skewX(-18deg) !important;
+    background:
+        linear-gradient(90deg, #7dd3fc 0 8px, transparent 8px 14px, #7dd3fc 14px 22px, transparent 22px 28px, #7dd3fc 28px 36px) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    opacity: 0.86 !important;
+}
+
+#vehicles form.form-grid > button[type="submit"]::after,
+#temporary form.form-grid > button[type="submit"]::after {
+    content: "" !important;
+    position: absolute !important;
+    right: 36px !important;
+    top: 50% !important;
+    width: 36px !important;
+    height: 12px !important;
+    transform: translateY(-50%) skewX(-18deg) !important;
+    background:
+        linear-gradient(90deg, #38bdf8 0 8px, transparent 8px 14px, #38bdf8 14px 22px, transparent 22px 28px, #38bdf8 28px 36px) !important;
+    opacity: 0.88 !important;
+}
+
+
+/* =========================================================
+   BLOCK/LOT SPINNER REMOVE + FORM BUTTON ALIGNMENT FINAL
+   - Removes up/down number buttons
+   - Keeps Block/Lot as normal typing fields
+   - Aligns Save Registered Vehicle with Grant Temporary Access
+   ========================================================= */
+
+/* Remove browser number steppers if any old type=number remains cached */
+.block-lot-input::-webkit-outer-spin-button,
+.block-lot-input::-webkit-inner-spin-button {
+    -webkit-appearance: none !important;
+    margin: 0 !important;
+}
+
+.block-lot-input[type="number"] {
+    -moz-appearance: textfield !important;
+    appearance: textfield !important;
+}
+
+/* Cleaner block/lot input look */
+.block-lot-input {
+    text-align: center !important;
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    -moz-appearance: textfield !important;
+}
+
+/* Keep both panels visually balanced */
+.management-row #vehicles,
+.management-row #temporary {
+    min-height: 408px !important;
+}
+
+/* Push only the left form button down to match the temporary form button */
+#vehicles form.form-grid > button[type="submit"],
+#vehicles .form-grid button {
+    margin-top: 60px !important;
+}
+
+/* Keep temporary button in its normal position */
+#temporary form.form-grid > button[type="submit"],
+#temporary .form-grid button {
+    margin-top: 0 !important;
+}
+
+/* Make sure buttons stay inside the form flow and never overlap fields */
+#vehicles form.form-grid > button[type="submit"],
+#temporary form.form-grid > button[type="submit"],
+#vehicles .form-grid button,
+#temporary .form-grid button {
+    position: relative !important;
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+}
+
+
+/* =========================================================
+   LIVE TABLE REFRESH SAFETY PATCH
+   No layout change; just keeps updated rows readable.
+   ========================================================= */
+
+#insideTable tbody,
+#logsTable tbody,
+#tempVisitorsWrap tbody {
+    will-change: contents;
+}
+
+
+/* =========================================================
+   ACTIVE TEMP VISITOR LIVE FIX TAGS
+   Shows if a temporary pass is Active or already Inside.
+   ========================================================= */
+
+.temp-pass-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 6px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.temp-pass-tag.active {
+    color: #a7f3d0;
+    border: 1px solid rgba(34, 197, 94, 0.28);
+    background: rgba(34, 197, 94, 0.10);
+}
+
+.temp-pass-tag.inside {
+    color: #bae6fd;
+    border: 1px solid rgba(56, 189, 248, 0.32);
+    background: rgba(56, 189, 248, 0.12);
+}
+
+
+/* =========================================================
+   TEMPORARY VISITOR STATUS COLUMN FIX
+   Status is now its own column, not inside Valid Until.
+   ========================================================= */
+
+#tempVisitorsTable th:nth-child(6),
+#tempVisitorsTable td:nth-child(6) {
+    text-align: center !important;
+    white-space: nowrap !important;
+}
+
+#tempVisitorsTable th:nth-child(7),
+#tempVisitorsTable td:nth-child(7) {
+    white-space: nowrap !important;
+}
+
+.temp-pass-tag {
+    margin-top: 0 !important;
+}
+
+
+/* =========================================================
+   FORCE TEMP VISITOR STATUS COLUMN
+   Makes Status its own column in Temporary Visitors.
+   ========================================================= */
+
+#tempVisitorsTable th:nth-child(6),
+#tempVisitorsTable td:nth-child(6) {
+    text-align: center !important;
+    white-space: nowrap !important;
+    width: 100px !important;
+}
+
+#tempVisitorsTable th:nth-child(7),
+#tempVisitorsTable td:nth-child(7) {
+    white-space: nowrap !important;
+}
+
+.temp-pass-tag {
+    margin-top: 0 !important;
+}
+
+
+/* =========================================================
+   ACTIVE TEMPORARY VISITOR OVERSTAYED STATUS
+   If a temporary visitor is still inside past valid_until,
+   the Active Temporary Access table flags it red too.
+   ========================================================= */
+
+.temp-pass-tag.overstayed {
+    color: #fecaca !important;
+    border: 1px solid rgba(239, 68, 68, 0.58) !important;
+    background: rgba(239, 68, 68, 0.20) !important;
+    box-shadow: 0 0 16px rgba(239, 68, 68, 0.10) !important;
+}
+
+#tempVisitorsTable tr.temp-overstayed-row {
+    background:
+        linear-gradient(90deg, rgba(239, 68, 68, 0.14), rgba(239, 68, 68, 0.035)) !important;
+    box-shadow: inset 4px 0 0 rgba(239, 68, 68, 0.80) !important;
+}
+
+#tempVisitorsTable tr.temp-overstayed-row td {
+    color: #ffe7e7 !important;
+}
+
+
+/* =========================================================
+   DASHBOARD ACTIVITY LOGS
+   Separate logs for Temp Access Created and Registered Vehicle Saved.
+   These are excluded from Recent Gate Activity.
+   ========================================================= */
+
+.dashboard-activity-panel {
+    margin-top: 24px !important;
+}
+
+#dashboardLogsTable {
+    min-width: 920px !important;
+}
+
+#dashboardLogsTable th:nth-child(5),
+#dashboardLogsTable td:nth-child(5) {
+    white-space: nowrap !important;
+}
+
+.dashboard-action-pill {
+    border-color: rgba(34, 211, 238, 0.30) !important;
+    background: rgba(34, 211, 238, 0.10) !important;
+    color: #bae6fd !important;
+}
+
+
+/* =========================================================
+   LOG TABLE SCROLL HEIGHT FIX
+   Recent Gate Activity and Dashboard Activity Logs show around
+   6-7 rows first, then become scrollable.
+   ========================================================= */
+
+/* Recent Gate Activity */
+#logs .table-wrap {
+    max-height: 430px !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+}
+
+/* Dashboard Activity Logs */
+#dashboardActivityLogs .table-wrap {
+    max-height: 430px !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+}
+
+/* Keep table headers visible while scrolling */
+#logs thead th,
+#dashboardActivityLogs thead th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 5 !important;
+    background: #071126 !important;
+}
+
+/* Clean scrollbar matching the rest of the dashboard */
+#logs .table-wrap::-webkit-scrollbar,
+#dashboardActivityLogs .table-wrap::-webkit-scrollbar {
+    width: 10px !important;
+    height: 10px !important;
+}
+
+#logs .table-wrap::-webkit-scrollbar-track,
+#dashboardActivityLogs .table-wrap::-webkit-scrollbar-track {
+    background: rgba(2, 6, 23, 0.45) !important;
+    border-radius: 999px !important;
+}
+
+#logs .table-wrap::-webkit-scrollbar-thumb,
+#dashboardActivityLogs .table-wrap::-webkit-scrollbar-thumb {
+    background: rgba(34, 211, 238, 0.45) !important;
+    border-radius: 999px !important;
+}
+
+
+/* =========================================================
+   RESPONSIVE HERO + SIDEBAR TOGGLE FIX
+   - Hero title will not overlap the orb on laptop screens.
+   - Sidebar toggle stays as a clean side tab and does not jump around.
+   ========================================================= */
+
+.hero {
+    grid-template-columns: minmax(0, 1fr) minmax(150px, 220px) !important;
+}
+
+.hero-copy {
+    min-width: 0 !important;
+    max-width: 100% !important;
+}
+
+.hero h2 {
+    white-space: normal !important;
+    overflow-wrap: normal !important;
+    text-wrap: balance;
+    max-width: 100% !important;
+    font-size: clamp(30px, 3vw, 50px) !important;
+    line-height: 1.04 !important;
+}
+
+.hero-text {
+    max-width: 760px !important;
+}
+
+.hero-orb {
+    justify-self: end !important;
+    min-width: 170px !important;
+}
+
+/* Hide orb earlier on laptop-width screens so title never crashes into it. */
+@media (max-width: 1500px) {
+    .hero {
+        grid-template-columns: 1fr !important;
+        min-height: 260px !important;
+    }
+
+    .hero h2 {
+        white-space: normal !important;
+        max-width: 980px !important;
+        font-size: clamp(30px, 4vw, 46px) !important;
+    }
+
+    .hero-orb {
+        display: none !important;
+    }
+}
+
+@media (max-width: 760px) {
+    .hero {
+        padding: 26px 22px !important;
+        border-radius: 26px !important;
+    }
+
+    .hero h2 {
+        font-size: clamp(26px, 8vw, 38px) !important;
+        letter-spacing: -0.055em !important;
+    }
+
+    .hero-text {
+        font-size: 14px !important;
+        line-height: 1.65 !important;
+    }
+}
+
+/* Sidebar should stay overlay/fixed even on smaller screens */
+@media (max-width: 1100px) {
+    .sidebar {
+        position: fixed !important;
+        inset: 12px auto 12px 12px !important;
+        width: min(286px, calc(100vw - 58px)) !important;
+        margin: 0 !important;
+        z-index: 1000 !important;
+    }
+
+    .main {
+        margin-left: 0 !important;
+        padding: 12px !important;
+    }
+
+    .global-sidebar-toggle {
+        display: grid !important;
+    }
+}
+
+/* Clean side-tab toggle. No floating hamburger box. */
+.global-sidebar-toggle,
+.global-sidebar-toggle:hover,
+.global-sidebar-toggle:focus,
+.global-sidebar-toggle:active {
+    position: fixed !important;
+    top: 50% !important;
+    left: 286px !important;
+    width: 26px !important;
+    height: 60px !important;
+    transform: translateY(-50%) !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 0 18px 18px 0 !important;
+    border: 1px solid rgba(34, 211, 238, 0.36) !important;
+    border-left: 0 !important;
+    background: rgba(2, 6, 23, 0.90) !important;
+    color: #22d3ee !important;
+    font-size: 22px !important;
+    line-height: 1 !important;
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.08) !important;
+    z-index: 1300 !important;
+    outline: none !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle,
+body.sidebar-collapsed .global-sidebar-toggle:hover,
+body.sidebar-collapsed .global-sidebar-toggle:focus,
+body.sidebar-collapsed .global-sidebar-toggle:active {
+    left: 0 !important;
+}
+
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 286px !important;
+}
+
+@media (max-width: 1100px) {
+    body:not(.sidebar-collapsed) .global-sidebar-toggle {
+        left: min(298px, calc(100vw - 46px)) !important;
+    }
+
+    body.sidebar-collapsed .global-sidebar-toggle {
+        left: 0 !important;
+    }
+}
+
+/* Avoid text selection highlight look on hero title when page is clicked */
+.hero h2::selection,
+.hero-kicker::selection,
+.hero-text::selection {
+    background: rgba(34, 211, 238, 0.24);
+}
+
+
+
+/* =========================================================
+   HERO + SIDEBAR RESTORE FIX
+   - Orb stays inside the hero, not pushed to the far edge.
+   - Hero title can wrap before it reaches the orb.
+   - Sidebar toggle is a clean chevron tab only, no hamburger/extra lines.
+   ========================================================= */
+
+/* Hero layout: keep orb visible but give title safe space */
+.hero {
+    grid-template-columns: minmax(0, 820px) 240px !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 42px !important;
+    padding-right: 54px !important;
+}
+
+.hero-copy {
+    min-width: 0 !important;
+    max-width: 820px !important;
+}
+
+.hero h2 {
+    max-width: 820px !important;
+    white-space: normal !important;
+    overflow-wrap: normal !important;
+    word-break: keep-all !important;
+    font-size: clamp(34px, 3.15vw, 52px) !important;
+    line-height: 1.04 !important;
+    letter-spacing: -0.06em !important;
+}
+
+/* Keep the orb away from the extreme right side */
+.hero-orb {
+    display: grid !important;
+    justify-self: center !important;
+    margin-right: 18px !important;
+    min-width: 220px !important;
+    transform: scale(0.95) !important;
+    transform-origin: center !important;
+}
+
+/* On medium laptop screens, keep orb but make it smaller and let title wrap */
+@media (max-width: 1500px) {
+    .hero {
+        grid-template-columns: minmax(0, 700px) 190px !important;
+        gap: 28px !important;
+        padding-right: 34px !important;
+        min-height: 280px !important;
+    }
+
+    .hero h2 {
+        max-width: 700px !important;
+        font-size: clamp(32px, 3.35vw, 46px) !important;
+        white-space: normal !important;
+    }
+
+    .hero-orb {
+        display: grid !important;
+        min-width: 180px !important;
+        transform: scale(0.82) !important;
+        margin-right: 0 !important;
+    }
+}
+
+/* On smaller screens, hide orb so layout remains clean */
+@media (max-width: 1180px) {
+    .hero {
+        grid-template-columns: 1fr !important;
+        padding-right: 28px !important;
+    }
+
+    .hero h2 {
+        max-width: 100% !important;
+    }
+
+    .hero-orb {
+        display: none !important;
+    }
+}
+
+/* Sidebar toggle: chevron side tab only */
+.global-sidebar-toggle,
+.global-sidebar-toggle:hover,
+.global-sidebar-toggle:focus,
+.global-sidebar-toggle:active {
+    position: fixed !important;
+    top: 50% !important;
+    left: 286px !important;
+    width: 24px !important;
+    height: 58px !important;
+    transform: translateY(-50%) !important;
+    display: grid !important;
+    place-items: center !important;
+    padding: 0 !important;
+    border-radius: 0 18px 18px 0 !important;
+    border: 1px solid rgba(34, 211, 238, 0.42) !important;
+    border-left: 0 !important;
+    background: rgba(2, 6, 23, 0.92) !important;
+    color: transparent !important;
+    font-size: 0 !important;
+    line-height: 1 !important;
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.10) !important;
+    z-index: 1300 !important;
+    outline: none !important;
+}
+
+/* remove any old hamburger/line visual and show only one chevron */
+.global-sidebar-toggle::before {
+    content: "‹" !important;
+    color: #dff7ff !important;
+    font-size: 34px !important;
+    font-weight: 950 !important;
+    line-height: 1 !important;
+    transform: translateY(-1px) !important;
+    text-shadow: 0 0 12px rgba(34, 211, 238, 0.45) !important;
+}
+
+.global-sidebar-toggle::after {
+    content: none !important;
+    display: none !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle,
+body.sidebar-collapsed .global-sidebar-toggle:hover,
+body.sidebar-collapsed .global-sidebar-toggle:focus,
+body.sidebar-collapsed .global-sidebar-toggle:active {
+    left: 0 !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle::before {
+    content: "›" !important;
+}
+
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 286px !important;
+}
+
+@media (max-width: 1100px) {
+    .sidebar {
+        position: fixed !important;
+        inset: 12px auto 12px 12px !important;
+        width: min(286px, calc(100vw - 58px)) !important;
+        margin: 0 !important;
+        z-index: 1000 !important;
+    }
+
+    body:not(.sidebar-collapsed) .global-sidebar-toggle {
+        left: min(298px, calc(100vw - 46px)) !important;
+    }
+
+    body.sidebar-collapsed .global-sidebar-toggle {
+        left: 0 !important;
+    }
+}
+
+/* Prevent odd text selection-looking blocks on the title */
+.hero h2,
+.hero h2 * {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
+.hero h2::selection,
+.hero-kicker::selection,
+.hero-text::selection {
+    background: rgba(34, 211, 238, 0.20) !important;
+    color: #ffffff !important;
+}
+
+
+
+/* =========================================================
+   HERO TITLE LINE FIX + SIDEBAR TAB POSITION FIX
+   - Smart Vehicle Access Control starts on the second line.
+   - Sidebar chevron tab sits outside the sidebar, not overlapping inside.
+   ========================================================= */
+
+.hero h2 {
+    white-space: normal !important;
+    max-width: 920px !important;
+    line-height: 1.04 !important;
+}
+
+.hero-title-second {
+    display: inline-block !important;
+}
+
+/* Give the hero copy a little more breathing room now that title is two lines */
+.hero-copy {
+    max-width: 960px !important;
+}
+
+/* Keep orb inside hero but not too far to the right */
+.hero {
+    grid-template-columns: minmax(0, 1fr) 220px !important;
+    gap: 34px !important;
+    padding-right: 44px !important;
+}
+
+.hero-orb {
+    justify-self: center !important;
+    margin-right: 0 !important;
+    transform: scale(0.88) !important;
+}
+
+/* Sidebar tab should sit outside the sidebar edge */
+.global-sidebar-toggle,
+.global-sidebar-toggle:hover,
+.global-sidebar-toggle:focus,
+.global-sidebar-toggle:active {
+    left: 278px !important;
+    width: 26px !important;
+    height: 58px !important;
+    z-index: 1500 !important;
+    border-radius: 0 18px 18px 0 !important;
+    color: transparent !important;
+    font-size: 0 !important;
+    overflow: visible !important;
+}
+
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 278px !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle {
+    left: 0 !important;
+}
+
+/* Make sure only one chevron shows */
+.global-sidebar-toggle::before {
+    content: "‹" !important;
+    color: #e0f7ff !important;
+    font-size: 34px !important;
+    font-weight: 950 !important;
+    line-height: 1 !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle::before {
+    content: "›" !important;
+}
+
+.global-sidebar-toggle::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* On smaller screens, keep the tab at the actual sidebar edge */
+@media (max-width: 1100px) {
+    body:not(.sidebar-collapsed) .global-sidebar-toggle {
+        left: min(286px, calc(100vw - 46px)) !important;
+    }
+
+    body.sidebar-collapsed .global-sidebar-toggle {
+        left: 0 !important;
+    }
+}
+
+/* On medium screens, don't force-hide the orb too early, but keep it smaller */
+@media (max-width: 1500px) {
+    .hero {
+        grid-template-columns: minmax(0, 1fr) 175px !important;
+        gap: 22px !important;
+        padding-right: 28px !important;
+    }
+
+    .hero h2 {
+        max-width: 760px !important;
+        font-size: clamp(32px, 3.2vw, 46px) !important;
+    }
+
+    .hero-orb {
+        display: grid !important;
+        transform: scale(0.72) !important;
+        min-width: 160px !important;
+    }
+}
+
+@media (max-width: 1180px) {
+    .hero {
+        grid-template-columns: 1fr !important;
+    }
+
+    .hero-orb {
+        display: none !important;
+    }
+}
+
+
+
+/* =========================================================
+   FINAL HERO ORB SIZE + SIDEBAR CHEVRON FIX
+   Requested only:
+   1. Restore hero orb to original big size.
+   2. Keep Smart Vehicle Access Control on second line.
+   3. Fix sidebar open/close button as clean chevron tab.
+   ========================================================= */
+
+/* Hero title line break */
+.hero h2 {
+    white-space: normal !important;
+    max-width: 920px !important;
+    line-height: 1.04 !important;
+}
+
+.hero-title-second {
+    display: block !important;
+}
+
+/* Put the orb back to the original large size */
+.hero-orb {
+    display: grid !important;
+    place-items: center !important;
+    justify-self: center !important;
+    min-width: 250px !important;
+    min-height: 250px !important;
+    margin-right: 0 !important;
+    transform: none !important;
+}
+
+.hero-logo {
+    width: 160px !important;
+    height: 160px !important;
+}
+
+.ring-one {
+    width: 220px !important;
+    height: 220px !important;
+}
+
+.ring-two {
+    width: 180px !important;
+    height: 180px !important;
+}
+
+/* Hero layout keeps title safe while orb stays visible */
+.hero {
+    grid-template-columns: minmax(0, 1fr) 270px !important;
+    gap: 28px !important;
+    padding-right: 42px !important;
+}
+
+.hero-copy {
+    min-width: 0 !important;
+    max-width: 950px !important;
+}
+
+/* Laptop screens: keep orb original size as long as there is room */
+@media (max-width: 1500px) {
+    .hero {
+        grid-template-columns: minmax(0, 1fr) 255px !important;
+        gap: 24px !important;
+        padding-right: 34px !important;
+    }
+
+    .hero h2 {
+        max-width: 760px !important;
+        font-size: clamp(32px, 3.2vw, 46px) !important;
+    }
+
+    .hero-orb {
+        display: grid !important;
+        min-width: 240px !important;
+        min-height: 240px !important;
+        transform: none !important;
+    }
+}
+
+/* Only hide orb on smaller screens where it truly cannot fit */
+@media (max-width: 1180px) {
+    .hero {
+        grid-template-columns: 1fr !important;
+    }
+
+    .hero-orb {
+        display: none !important;
+    }
+}
+
+/* Sidebar chevron tab only: no hamburger, no extra lines */
+.global-sidebar-toggle,
+.global-sidebar-toggle:hover,
+.global-sidebar-toggle:focus,
+.global-sidebar-toggle:active {
+    position: fixed !important;
+    top: 50% !important;
+    left: 284px !important;
+    width: 24px !important;
+    height: 58px !important;
+    transform: translateY(-50%) !important;
+    display: grid !important;
+    place-items: center !important;
+    padding: 0 !important;
+    border-radius: 0 18px 18px 0 !important;
+    border: 1px solid rgba(34, 211, 238, 0.45) !important;
+    border-left: 0 !important;
+    background: rgba(2, 6, 23, 0.94) !important;
+    color: transparent !important;
+    font-size: 0 !important;
+    line-height: 1 !important;
+    overflow: hidden !important;
+    z-index: 1500 !important;
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.10) !important;
+    outline: none !important;
+}
+
+/* The visible symbol */
+.global-sidebar-toggle::before {
+    content: "‹" !important;
+    display: block !important;
+    color: #e6fbff !important;
+    font-size: 34px !important;
+    font-weight: 950 !important;
+    line-height: 1 !important;
+    transform: translateY(-1px) !important;
+    text-shadow: 0 0 12px rgba(34, 211, 238, 0.45) !important;
+}
+
+.global-sidebar-toggle::after {
+    content: none !important;
+    display: none !important;
+}
+
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 284px !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle {
+    left: 0 !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle::before {
+    content: "›" !important;
+}
+
+@media (max-width: 1100px) {
+    body:not(.sidebar-collapsed) .global-sidebar-toggle {
+        left: min(284px, calc(100vw - 42px)) !important;
+    }
+
+    body.sidebar-collapsed .global-sidebar-toggle {
+        left: 0 !important;
+    }
+}
+
+
+
+/* =========================================================
+   FINAL REAL FIX - HERO TITLE + SIDEBAR TAB
+   Fixes:
+   - Browser tab title no longer shows HTML code.
+   - Hero title line break is applied only in the visible hero.
+   - Sidebar toggle sits outside the sidebar edge, not inside/overlapping.
+   ========================================================= */
+
+/* Hero title: force Smart Vehicle Access Control onto line 2 */
+.hero h2 {
+    white-space: normal !important;
+    max-width: 960px !important;
+    line-height: 1.04 !important;
+}
+
+.hero-title-second {
+    display: block !important;
+}
+
+/* Keep orb in original large style */
+.hero-orb {
+    display: grid !important;
+    place-items: center !important;
+    justify-self: center !important;
+    min-width: 250px !important;
+    min-height: 250px !important;
+    margin-right: 0 !important;
+    transform: none !important;
+}
+
+.hero-logo {
+    width: 160px !important;
+    height: 160px !important;
+}
+
+.ring-one {
+    width: 220px !important;
+    height: 220px !important;
+}
+
+.ring-two {
+    width: 180px !important;
+    height: 180px !important;
+}
+
+.hero {
+    grid-template-columns: minmax(0, 1fr) 270px !important;
+    gap: 30px !important;
+    padding-right: 42px !important;
+}
+
+.hero-copy {
+    min-width: 0 !important;
+    max-width: 980px !important;
+}
+
+@media (max-width: 1500px) {
+    .hero {
+        grid-template-columns: minmax(0, 1fr) 255px !important;
+        gap: 24px !important;
+        padding-right: 34px !important;
+    }
+
+    .hero h2 {
+        max-width: 780px !important;
+        font-size: clamp(32px, 3.2vw, 46px) !important;
+    }
+
+    .hero-orb {
+        display: grid !important;
+        min-width: 240px !important;
+        min-height: 240px !important;
+        transform: none !important;
+    }
+}
+
+@media (max-width: 1180px) {
+    .hero {
+        grid-template-columns: 1fr !important;
+    }
+
+    .hero-orb {
+        display: none !important;
+    }
+}
+
+/* Sidebar chevron tab: place outside the sidebar edge */
+.global-sidebar-toggle,
+.global-sidebar-toggle:hover,
+.global-sidebar-toggle:focus,
+.global-sidebar-toggle:active {
+    position: fixed !important;
+    top: 50% !important;
+    left: 292px !important; /* outside the 280px sidebar */
+    width: 25px !important;
+    height: 58px !important;
+    transform: translateY(-50%) !important;
+    display: grid !important;
+    place-items: center !important;
+    padding: 0 !important;
+    border-radius: 0 18px 18px 0 !important;
+    border: 1px solid rgba(34, 211, 238, 0.45) !important;
+    border-left: 0 !important;
+    background: rgba(2, 6, 23, 0.94) !important;
+    color: transparent !important;
+    font-size: 0 !important;
+    line-height: 1 !important;
+    overflow: hidden !important;
+    z-index: 3000 !important;
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.10) !important;
+    outline: none !important;
+}
+
+/* Show only one chevron */
+.global-sidebar-toggle::before {
+    content: "‹" !important;
+    display: block !important;
+    color: #e6fbff !important;
+    font-size: 34px !important;
+    font-weight: 950 !important;
+    line-height: 1 !important;
+    transform: translateY(-1px) !important;
+    text-shadow: 0 0 12px rgba(34, 211, 238, 0.45) !important;
+}
+
+.global-sidebar-toggle::after {
+    content: none !important;
+    display: none !important;
+}
+
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 292px !important;
+}
+
+/* When hidden, tab goes to far-left edge */
+body.sidebar-collapsed .global-sidebar-toggle,
+body.sidebar-collapsed .global-sidebar-toggle:hover,
+body.sidebar-collapsed .global-sidebar-toggle:focus,
+body.sidebar-collapsed .global-sidebar-toggle:active {
+    left: 0 !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle::before {
+    content: "›" !important;
+}
+
+/* Sidebar fixed width alignment */
+.sidebar {
+    width: 280px !important;
+}
+
+@media (max-width: 1100px) {
+    .sidebar {
+        width: min(280px, calc(100vw - 58px)) !important;
+    }
+
+    body:not(.sidebar-collapsed) .global-sidebar-toggle {
+        left: min(292px, calc(100vw - 42px)) !important;
+    }
+
+    body.sidebar-collapsed .global-sidebar-toggle {
+        left: 0 !important;
+    }
+}
+
+
+
+/* =========================================================
+   FINAL MANUAL RESPONSIVE + SIDEBAR TAB EDGE FIX
+   - Manual command buttons will not overlap when browser is minimized.
+   - Sidebar chevron tab is flush outside the sidebar edge.
+   ========================================================= */
+
+/* Sidebar actual edge = left inset 18px + sidebar width 286px = 304px */
+.global-sidebar-toggle,
+.global-sidebar-toggle:hover,
+.global-sidebar-toggle:focus,
+.global-sidebar-toggle:active {
+    left: 304px !important;
+    width: 25px !important;
+    height: 58px !important;
+    border-radius: 0 18px 18px 0 !important;
+    border-left: 0 !important;
+    overflow: hidden !important;
+    color: transparent !important;
+    font-size: 0 !important;
+    z-index: 3000 !important;
+}
+
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 304px !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle,
+body.sidebar-collapsed .global-sidebar-toggle:hover,
+body.sidebar-collapsed .global-sidebar-toggle:focus,
+body.sidebar-collapsed .global-sidebar-toggle:active {
+    left: 0 !important;
+}
+
+.global-sidebar-toggle::before {
+    content: "‹" !important;
+    display: block !important;
+    color: #e6fbff !important;
+    font-size: 34px !important;
+    font-weight: 950 !important;
+    line-height: 1 !important;
+    transform: translateY(-1px) !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle::before {
+    content: "›" !important;
+}
+
+.global-sidebar-toggle::after {
+    content: none !important;
+    display: none !important;
+}
+
+/* Manual command area: flexible columns, no forced minimum that causes overlap */
+#manual.manual-option-d .manual-premium-grid,
+#manual.manual-option-d .command-pad-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 22px !important;
+}
+
+/* Default safer button spacing */
+#manual.manual-option-d .command-pad-btn {
+    min-height: 122px !important;
+    padding-left: 132px !important;
+    padding-right: 130px !important;
+}
+
+#manual.manual-option-d .command-copy strong {
+    white-space: nowrap !important;
+    font-size: clamp(20px, 1.42vw, 28px) !important;
+    letter-spacing: 0.02em !important;
+}
+
+/* Keep the icon area away from the label */
+#manual.manual-option-d .command-pad-btn::before {
+    width: 118px !important;
+}
+
+#manual.manual-option-d .command-icon {
+    left: 36px !important;
+    width: 50px !important;
+}
+
+#manual.manual-option-d .command-symbol {
+    font-size: 38px !important;
+}
+
+/* Keep right accent compact so it does not touch text */
+#manual.manual-option-d .command-pad-btn::after {
+    right: 34px !important;
+    width: 56px !important;
+    height: 48px !important;
+}
+
+#manual.manual-option-d .command-slashes {
+    right: 42px !important;
+    width: 42px !important;
+}
+
+/* Medium/minimized browser: shrink buttons/text before stacking */
+@media (max-width: 1580px) {
+    #manual.manual-option-d {
+        padding: 20px !important;
+    }
+
+    #manual.manual-option-d .manual-premium-grid,
+    #manual.manual-option-d .command-pad-grid {
+        gap: 18px !important;
+        padding: 16px !important;
+    }
+
+    #manual.manual-option-d .command-lane-card {
+        padding: 16px !important;
+    }
+
+    #manual.manual-option-d .command-pad-btn {
+        min-height: 116px !important;
+        padding-left: 108px !important;
+        padding-right: 96px !important;
+    }
+
+    #manual.manual-option-d .command-copy strong {
+        font-size: clamp(18px, 1.25vw, 24px) !important;
+        letter-spacing: 0.01em !important;
+    }
+
+    #manual.manual-option-d .command-icon {
+        left: 30px !important;
+        width: 42px !important;
+    }
+
+    #manual.manual-option-d .command-symbol {
+        font-size: 34px !important;
+    }
+
+    #manual.manual-option-d .command-pad-btn::before {
+        width: 92px !important;
+    }
+
+    #manual.manual-option-d .command-pad-btn::after {
+        right: 26px !important;
+        width: 44px !important;
+        opacity: 0.22 !important;
+    }
+
+    #manual.manual-option-d .command-slashes {
+        right: 28px !important;
+        width: 34px !important;
+    }
+}
+
+/* When too narrow, stack entrance and exit so it stays clean */
+@media (max-width: 1380px) {
+    #manual.manual-option-d .manual-premium-grid,
+    #manual.manual-option-d .command-pad-grid {
+        grid-template-columns: 1fr !important;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.08), transparent 38%),
+            rgba(2, 6, 23, 0.24) !important;
+    }
+
+    #manual.manual-option-d .command-pad-btn {
+        min-height: 108px !important;
+        padding-left: 118px !important;
+        padding-right: 106px !important;
+    }
+
+    #manual.manual-option-d .command-copy strong {
+        font-size: clamp(20px, 2.8vw, 30px) !important;
+    }
+}
+
+/* Small screens: compact but no overlap */
+@media (max-width: 760px) {
+    #manual.manual-option-d {
+        padding: 16px !important;
+    }
+
+    #manual.manual-option-d .command-pad-grid {
+        padding: 12px !important;
+    }
+
+    #manual.manual-option-d .command-lane-card {
+        padding: 12px !important;
+    }
+
+    #manual.manual-option-d .command-lane-title h4 {
+        font-size: 16px !important;
+        letter-spacing: 0.12em !important;
+    }
+
+    #manual.manual-option-d .command-pad-btn {
+        min-height: 92px !important;
+        padding-left: 74px !important;
+        padding-right: 58px !important;
+    }
+
+    #manual.manual-option-d .command-pad-btn::before {
+        width: 58px !important;
+    }
+
+    #manual.manual-option-d .command-icon {
+        left: 20px !important;
+        width: 30px !important;
+    }
+
+    #manual.manual-option-d .command-symbol {
+        font-size: 26px !important;
+    }
+
+    #manual.manual-option-d .command-copy strong {
+        font-size: clamp(15px, 4.2vw, 21px) !important;
+        white-space: nowrap !important;
+    }
+
+    #manual.manual-option-d .command-pad-btn::after,
+    #manual.manual-option-d .command-slashes {
+        display: none !important;
+    }
+}
+
+/* Smaller screens: tab follows the visible sidebar edge */
+@media (max-width: 1100px) {
+    body:not(.sidebar-collapsed) .global-sidebar-toggle {
+        left: min(304px, calc(100vw - 42px)) !important;
+    }
+
+    body.sidebar-collapsed .global-sidebar-toggle {
+        left: 0 !important;
+    }
+}
+
+
+
+/* =========================================================
+   FINAL MINIMIZED MANUAL + SIDEBAR TAB TIGHT FIX
+   - Only affects minimized / narrower layouts.
+   - Moves command text slightly lower so it does not overlap the arrow.
+   - Sidebar chevron tab is tighter/dikit to the sidebar edge.
+   ========================================================= */
+
+/* Sidebar tab: dikit sa edge, not floating too far */
+.global-sidebar-toggle,
+.global-sidebar-toggle:hover,
+.global-sidebar-toggle:focus,
+.global-sidebar-toggle:active {
+    left: 298px !important;
+    width: 22px !important;
+    height: 58px !important;
+    border-radius: 0 17px 17px 0 !important;
+    border-left: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    z-index: 3000 !important;
+}
+
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 298px !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle,
+body.sidebar-collapsed .global-sidebar-toggle:hover,
+body.sidebar-collapsed .global-sidebar-toggle:focus,
+body.sidebar-collapsed .global-sidebar-toggle:active {
+    left: 0 !important;
+}
+
+.global-sidebar-toggle::before {
+    font-size: 32px !important;
+}
+
+/* Narrow/minimized browser: make command buttons adapt cleanly */
+@media (max-width: 1380px) {
+    #manual.manual-option-d .command-pad-btn {
+        min-height: 116px !important;
+        padding-left: 92px !important;
+        padding-right: 66px !important;
+    }
+
+    /* Move label lower only when minimized so arrow and text do not collide */
+    #manual.manual-option-d .command-copy {
+        transform: translateY(17px) !important;
+    }
+
+    #manual.manual-option-d .command-copy strong {
+        font-size: clamp(21px, 2.6vw, 28px) !important;
+        line-height: 1 !important;
+        letter-spacing: 0.01em !important;
+        white-space: nowrap !important;
+    }
+
+    /* Keep arrow slightly above the text in minimized mode */
+    #manual.manual-option-d .command-icon {
+        top: 38% !important;
+        left: 34px !important;
+        width: 38px !important;
+        height: 48px !important;
+    }
+
+    #manual.manual-option-d .command-symbol {
+        font-size: 32px !important;
+    }
+
+    /* Remove icon column line from competing with text */
+    #manual.manual-option-d .command-pad-btn::before {
+        width: 82px !important;
+    }
+
+    /* Make right accents smaller so text has breathing room */
+    #manual.manual-option-d .command-pad-btn::after {
+        right: 24px !important;
+        width: 36px !important;
+        height: 36px !important;
+        opacity: 0.18 !important;
+    }
+
+    #manual.manual-option-d .command-slashes {
+        right: 28px !important;
+        width: 34px !important;
+    }
+}
+
+/* Smaller screens: keep same idea but more compact */
+@media (max-width: 760px) {
+    #manual.manual-option-d .command-copy {
+        transform: translateY(13px) !important;
+    }
+
+    #manual.manual-option-d .command-pad-btn {
+        padding-left: 70px !important;
+        padding-right: 42px !important;
+    }
+
+    #manual.manual-option-d .command-icon {
+        left: 20px !important;
+        top: 37% !important;
+    }
+
+    #manual.manual-option-d .command-copy strong {
+        font-size: clamp(16px, 4.3vw, 22px) !important;
+    }
+}
+
+/* If browser gets very narrow, tab follows edge of visible sidebar */
+@media (max-width: 1100px) {
+    body:not(.sidebar-collapsed) .global-sidebar-toggle {
+        left: min(298px, calc(100vw - 36px)) !important;
+    }
+
+    body.sidebar-collapsed .global-sidebar-toggle {
+        left: 0 !important;
+    }
+}
+
+
+/* =========================================================
+   LOG SEARCH + FILTER TOOLBARS
+   Recent Gate Activity and Registration/Temporary Access logs.
+   ========================================================= */
+
+.log-toolbar {
+    display: grid;
+    grid-template-columns: minmax(220px, 1fr) minmax(160px, 220px) minmax(170px, 240px);
+    gap: 12px;
+    align-items: end;
+    margin: 18px 0 14px;
+}
+
+.log-search-wrap,
+.log-filter-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.log-search-wrap span,
+.log-filter-wrap span {
+    color: #7dd3fc;
+    font-size: 11px;
+    font-weight: 950;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.log-toolbar input,
+.log-toolbar select {
+    width: 100%;
+    height: 44px;
+    padding: 0 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(148, 163, 184, 0.20);
+    background: rgba(2, 6, 23, 0.58);
+    color: var(--text);
+    outline: none;
+    font-weight: 800;
+}
+
+.log-toolbar input:focus,
+.log-toolbar select:focus {
+    border-color: rgba(34, 211, 238, 0.58);
+    box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.07);
+}
+
+.log-toolbar input::placeholder {
+    color: #8aa3c7;
+}
+
+@media (max-width: 900px) {
+    .log-toolbar {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+/* =========================================================
+   FINAL RESPONSIVE CLEANUP
+   Fixes:
+   1. Manual command buttons on minimized browser.
+   2. Sidebar chevron tab edge positioning.
+   3. Search/filter dropdown spacing.
+   ========================================================= */
+
+/* ---------- Sidebar chevron tab: always attached to sidebar edge ---------- */
+
+.sidebar {
+    width: 286px !important;
+    left: 18px !important;
+}
+
+.global-sidebar-toggle,
+.global-sidebar-toggle:hover,
+.global-sidebar-toggle:focus,
+.global-sidebar-toggle:active {
+    position: fixed !important;
+    top: 50% !important;
+    left: 304px !important; /* 18px sidebar left + 286px sidebar width */
+    width: 24px !important;
+    height: 58px !important;
+    transform: translateY(-50%) !important;
+    display: grid !important;
+    place-items: center !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 17px 17px 0 !important;
+    border: 1px solid rgba(34, 211, 238, 0.45) !important;
+    border-left: 0 !important;
+    background: rgba(2, 6, 23, 0.95) !important;
+    color: transparent !important;
+    font-size: 0 !important;
+    line-height: 1 !important;
+    overflow: hidden !important;
+    z-index: 3000 !important;
+    box-shadow: 0 0 14px rgba(34, 211, 238, 0.10) !important;
+    outline: none !important;
+}
+
+.global-sidebar-toggle::before {
+    content: "‹" !important;
+    display: block !important;
+    color: #e6fbff !important;
+    font-size: 32px !important;
+    font-weight: 950 !important;
+    line-height: 1 !important;
+    transform: translateY(-1px) !important;
+    text-shadow: 0 0 12px rgba(34, 211, 238, 0.45) !important;
+}
+
+.global-sidebar-toggle::after {
+    content: none !important;
+    display: none !important;
+}
+
+body:not(.sidebar-collapsed) .global-sidebar-toggle {
+    left: 304px !important;
+}
+
+/* When hidden/collapsed: flush to left edge, no weird hanging line */
+body.sidebar-collapsed .sidebar {
+    transform: translateX(-130%) !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle,
+body.sidebar-collapsed .global-sidebar-toggle:hover,
+body.sidebar-collapsed .global-sidebar-toggle:focus,
+body.sidebar-collapsed .global-sidebar-toggle:active {
+    left: 0 !important;
+    border-left: 0 !important;
+    border-radius: 0 17px 17px 0 !important;
+}
+
+body.sidebar-collapsed .global-sidebar-toggle::before {
+    content: "›" !important;
+}
+
+@media (max-width: 1100px) {
+    .sidebar {
+        width: min(286px, calc(100vw - 58px)) !important;
+        left: 12px !important;
+    }
+
+    body:not(.sidebar-collapsed) .global-sidebar-toggle {
+        left: min(298px, calc(100vw - 34px)) !important;
+    }
+
+    body.sidebar-collapsed .global-sidebar-toggle {
+        left: 0 !important;
+    }
+}
+
+/* ---------- Search/filter spacing fix ---------- */
+
+#logs .log-toolbar,
+#dashboardActivityLogs .log-toolbar {
+    width: calc(100% - 32px) !important;
+    margin: 18px 16px 14px !important;
+    box-sizing: border-box !important;
+    grid-template-columns: minmax(240px, 1fr) minmax(170px, 230px) minmax(180px, 250px) !important;
+}
+
+#logs .log-toolbar input,
+#logs .log-toolbar select,
+#dashboardActivityLogs .log-toolbar input,
+#dashboardActivityLogs .log-toolbar select {
+    box-sizing: border-box !important;
+    padding-left: 16px !important;
+    padding-right: 42px !important;
+}
+
+#logs .table-wrap,
+#dashboardActivityLogs .table-wrap {
+    width: calc(100% - 32px) !important;
+    margin-left: 16px !important;
+    margin-right: 16px !important;
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 900px) {
+    #logs .log-toolbar,
+    #dashboardActivityLogs .log-toolbar {
+        grid-template-columns: 1fr !important;
+        width: calc(100% - 24px) !important;
+        margin-left: 12px !important;
+        margin-right: 12px !important;
+    }
+
+    #logs .table-wrap,
+    #dashboardActivityLogs .table-wrap {
+        width: calc(100% - 24px) !important;
+        margin-left: 12px !important;
+        margin-right: 12px !important;
+    }
+}
+
+/* ---------- Manual command adaptive fix ---------- */
+
+/* Let lanes shrink without forcing overlap */
+#manual.manual-option-d .manual-premium-grid,
+#manual.manual-option-d .command-pad-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+}
+
+/* Default button safety */
+#manual.manual-option-d .command-pad-btn {
+    min-width: 0 !important;
+}
+
+/* At minimized desktop widths, stack the two lanes.
+   This avoids squeezing OPEN/CLOSE text into the arrow column. */
+@media (max-width: 1560px) {
+    #manual.manual-option-d .manual-premium-grid,
+    #manual.manual-option-d .command-pad-grid {
+        grid-template-columns: 1fr !important;
+        gap: 18px !important;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.08), transparent 38%),
+            rgba(2, 6, 23, 0.24) !important;
+    }
+
+    #manual.manual-option-d .command-lane-card {
+        padding: 16px !important;
+    }
+
+    #manual.manual-option-d .command-pad-btn {
+        min-height: 112px !important;
+        padding-left: 116px !important;
+        padding-right: 118px !important;
+    }
+
+    #manual.manual-option-d .command-icon {
+        left: 34px !important;
+        top: 50% !important;
+        width: 44px !important;
+        height: 54px !important;
+        transform: translateY(-50%) !important;
+    }
+
+    #manual.manual-option-d .command-symbol {
+        font-size: 34px !important;
+    }
+
+    #manual.manual-option-d .command-copy {
+        transform: none !important;
+        text-align: center !important;
+        min-width: 0 !important;
+    }
+
+    #manual.manual-option-d .command-copy strong {
+        white-space: nowrap !important;
+        font-size: clamp(22px, 2.4vw, 30px) !important;
+        line-height: 1 !important;
+        letter-spacing: 0.015em !important;
+    }
+
+    #manual.manual-option-d .command-pad-btn::before {
+        width: 94px !important;
+    }
+
+    #manual.manual-option-d .command-pad-btn::after {
+        right: 44px !important;
+        width: 58px !important;
+        height: 44px !important;
+        opacity: 0.22 !important;
+    }
+
+    #manual.manual-option-d .command-slashes {
+        right: 52px !important;
+        width: 38px !important;
+    }
+}
+
+/* If still narrow, allow Entrance to move to second line instead of overlapping */
+@media (max-width: 720px) {
+    #manual.manual-option-d .command-pad-btn {
+        min-height: 102px !important;
+        padding-left: 76px !important;
+        padding-right: 42px !important;
+    }
+
+    #manual.manual-option-d .command-icon {
+        left: 22px !important;
+        width: 32px !important;
+    }
+
+    #manual.manual-option-d .command-symbol {
+        font-size: 26px !important;
+    }
+
+    #manual.manual-option-d .command-copy strong {
+        white-space: normal !important;
+        max-width: 170px !important;
+        line-height: 0.95 !important;
+        font-size: clamp(17px, 5vw, 23px) !important;
+    }
+
+    #manual.manual-option-d .command-pad-btn::after,
+    #manual.manual-option-d .command-slashes {
+        display: none !important;
+    }
+}
+
+
+/* =========================================================
+   LOG HISTORY SCROLL FIX
+   Recent Gate Activity and Registration/Temporary Access Logs
+   keep past rows loaded and scrollable instead of visually disappearing.
+   ========================================================= */
+
+#logs .table-wrap,
+#dashboardActivityLogs .table-wrap {
+    max-height: 520px !important;
+    overflow-y: auto !important;
+    overflow-x: auto !important;
+    display: block !important;
+    border-radius: 18px !important;
+}
+
+/* Keep headers visible while scrolling */
+#logs table thead th,
+#dashboardActivityLogs table thead th {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 10 !important;
+    background: #071126 !important;
+}
+
+/* Make sure the tables keep their full width inside the scroll wrapper */
+#logs table,
+#dashboardActivityLogs table {
+    width: 100% !important;
+    min-width: 920px !important;
+}
+
+/* Matching scrollbar */
+#logs .table-wrap::-webkit-scrollbar,
+#dashboardActivityLogs .table-wrap::-webkit-scrollbar {
+    width: 10px !important;
+    height: 10px !important;
+}
+
+#logs .table-wrap::-webkit-scrollbar-track,
+#dashboardActivityLogs .table-wrap::-webkit-scrollbar-track {
+    background: rgba(2, 6, 23, 0.45) !important;
+    border-radius: 999px !important;
+}
+
+#logs .table-wrap::-webkit-scrollbar-thumb,
+#dashboardActivityLogs .table-wrap::-webkit-scrollbar-thumb {
+    background: rgba(34, 211, 238, 0.48) !important;
+    border-radius: 999px !important;
+}
+
+#logs .table-wrap::-webkit-scrollbar-thumb:hover,
+#dashboardActivityLogs .table-wrap::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 197, 94, 0.65) !important;
+}
