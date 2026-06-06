@@ -90,6 +90,6 @@ This project was developed as an academic project to demonstrate the integration
 
 ## Author
 
-**Samantha**  
+**Sammy**  
 BS Information Technology  
 National University Fairview
